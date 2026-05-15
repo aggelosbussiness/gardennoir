@@ -834,7 +834,7 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
           <motion.form className="review-form" onSubmit={submitReview} whileHover={{ y: -4 }}>
             <Flower2 size={36} />
             <h3>Γράψε αξιολόγηση</h3>
-            <p>Η αξιολόγηση αποθηκεύεται και θα εμφανιστεί μόνο αφού την εγκρίνει ο διαχειριστής.</p>
+            <p>Η αξιολόγησή σας ελέγχεται πριν δημοσιευτεί, ώστε να διατηρούμε την ποιότητα και την αξιοπιστία των σχολίων.</p>
 
             {!currentUser ? (
               <input
@@ -856,7 +856,7 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
             />
 
             <button className="main-btn">Δημοσίευση αξιολόγησης</button>
-            {reviewSent && <div className="success">Η αξιολόγηση στάλθηκε για έγκριση!</div>}
+            {reviewSent && <div className="success">Η αξιολόγησή σας καταχωρήθηκε και θα εμφανιστεί μετά από έλεγχο.</div>}
           </motion.form>
         </div>
       </section>
@@ -889,7 +889,7 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
 
           <button className="main-btn"><Send size={18} /> Αποστολή αιτήματος</button>
 
-          {sent && <div className="success">Το μήνυμα στάλθηκε και εμφανίζεται στο Admin Panel.</div>}
+          {sent && <div className="success">Το αίτημά σας καταχωρήθηκε επιτυχώς. Θα επικοινωνήσουμε μαζί σας σύντομα.</div>}
           {error && <div className="error">{error}</div>}
         </motion.form>
       </section>
@@ -998,7 +998,7 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}>
           <span>Admin Command Center</span>
           <h1>Ιδιωτική πρόσβαση διαχειριστή.</h1>
-          <p>Για να μπεις στο admin panel, πρέπει να συνδεθείς με το εγκεκριμένο admin email.</p>
+          <p>Η πρόσβαση σε αυτή την περιοχή επιτρέπεται μόνο σε εξουσιοδοτημένο διαχειριστή.</p>
           {currentUser ? (
             <p className="error">Το email <b>{currentUser.email}</b> δεν έχει δικαιώματα admin.</p>
           ) : (
@@ -1009,7 +1009,7 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
         <motion.div className="admin-access-card" initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }}>
           <Lock size={44} />
           <h2>Admin Login</h2>
-          <p>Σύνδεση μόνο με εγκεκριμένο email διαχειριστή.</p>
+          <p>Χρησιμοποίησε το εξουσιοδοτημένο email διαχείρισης.</p>
           <button className="main-btn" onClick={() => openAuth("login")}>Login ως admin</button>
         </motion.div>
       </main>
@@ -1287,8 +1287,6 @@ export default function App() {
       <Style />
       <div className="app">
         <AnimatedBackground />
-
-        <BackendBadge backendMode={backendMode} />
 
         <Header
           view={view}
