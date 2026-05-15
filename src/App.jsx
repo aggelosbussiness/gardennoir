@@ -983,7 +983,7 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
           <span>Admin Command Center</span>
           <h1>Το control room του κηπουρού.</h1>
           <p>Backend: <b>{backendMode}</b></p>
-          <p>Demo κωδικός: <b>garden123</b></p>
+          
         </motion.div>
 
         <motion.form onSubmit={login} initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }}>
