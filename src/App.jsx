@@ -552,18 +552,27 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
 
     try {
       if (supabase) {
-        const { data, error } = await supabase
+        const newMessage = {
+          id: crypto.randomUUID(),
+          ...clean,
+          read: false,
+          status: "Νέο",
+          created_at: new Date().toISOString(),
+        };
+
+        const { error } = await supabase
           .from("messages")
           .insert({
             ...clean,
             read: false,
             status: "Νέο",
-          })
-          .select()
-          .single();
+          });
 
         if (error) throw error;
-        setMessages((prev) => [data, ...prev]);
+
+        if (isAdminUser(currentUser)) {
+          setMessages((prev) => [newMessage, ...prev]);
+        }
       } else {
         const next = [
           {
@@ -601,7 +610,17 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
 
     try {
       if (supabase) {
-        const { data, error } = await supabase
+        const newReview = {
+          id: crypto.randomUUID(),
+          name,
+          text,
+          rating,
+          approved: false,
+          user_id: currentUser?.id || null,
+          created_at: new Date().toISOString(),
+        };
+
+        const { error } = await supabase
           .from("reviews")
           .insert({
             name,
@@ -609,12 +628,13 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
             rating,
             approved: false,
             user_id: currentUser?.id || null,
-          })
-          .select()
-          .single();
+          });
 
         if (error) throw error;
-        setReviews((prev) => [data, ...prev]);
+
+        if (isAdminUser(currentUser)) {
+          setReviews((prev) => [newReview, ...prev]);
+        }
       } else {
         const next = [
           {
@@ -1167,15 +1187,15 @@ export default function App() {
     async function load() {
       if (supabase) {
         try {
-          const [{ data: msg, error: msgErr }, { data: rev, error: revErr }] = await Promise.all([
-            supabase.from("messages").select("*").order("created_at", { ascending: false }),
-            supabase.from("reviews").select("*").order("created_at", { ascending: false }),
-          ]);
+          const { data: rev, error: revErr } = await supabase
+            .from("reviews")
+            .select("*")
+            .eq("approved", true)
+            .order("created_at", { ascending: false });
 
-          if (msgErr) throw msgErr;
           if (revErr) throw revErr;
 
-          setMessages(msg || []);
+          setMessages([]);
           setReviews((rev && rev.length) ? rev : defaultReviews);
           setBackendMode("supabase");
 
@@ -1235,6 +1255,30 @@ export default function App() {
     window.addEventListener("click", handler);
     return () => window.removeEventListener("click", handler);
   }, []);
+
+  useEffect(() => {
+    if (!supabase || !isAdminUser(currentUser)) return;
+
+    async function loadAdminData() {
+      try {
+        const [{ data: msg, error: msgErr }, { data: rev, error: revErr }] = await Promise.all([
+          supabase.from("messages").select("*").order("created_at", { ascending: false }),
+          supabase.from("reviews").select("*").order("created_at", { ascending: false }),
+        ]);
+
+        if (msgErr) throw msgErr;
+        if (revErr) throw revErr;
+
+        setMessages(msg || []);
+        setReviews(rev || []);
+      } catch (err) {
+        console.error("Admin data load failed:", err);
+        alert("Δεν φορτώθηκαν τα admin δεδομένα. Έλεγξε τα Supabase RLS policies.");
+      }
+    }
+
+    loadAdminData();
+  }, [currentUser?.email]);
 
   const openAuth = (type) => setAuthType(type);
 
