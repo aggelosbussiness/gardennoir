@@ -322,10 +322,6 @@ function Header({ view, setView, currentUser, setCurrentUser, openAuth }) {
           </motion.button>
         ))}
 
-        <motion.button className="admin-btn" onClick={() => setView(view === "admin" ? "site" : "admin")} whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }}>
-          Admin Panel
-        </motion.button>
-
         {currentUser ? (
           <motion.button className="signup-btn" onClick={logout} whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }}>
             {currentUser.name} / Logout
@@ -357,7 +353,6 @@ function Header({ view, setView, currentUser, setCurrentUser, openAuth }) {
             {nav.map(([label, id]) => (
               <button key={id} onClick={() => go(id)}>{label}</button>
             ))}
-            <button onClick={() => setView(view === "admin" ? "site" : "admin")}>Admin Panel</button>
             {currentUser ? (
               <button onClick={logout}>{currentUser.name} / Logout</button>
             ) : (
@@ -1174,7 +1169,7 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
 }
 
 export default function App() {
-  const [view, setView] = useState("site");
+  const [view, setView] = useState(() => window.location.hash === "#admin" ? "admin" : "site");
   const [messages, setMessages] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [users, setUsers] = useState([]);
@@ -1279,6 +1274,16 @@ export default function App() {
 
     loadAdminData();
   }, [currentUser?.email]);
+
+  useEffect(() => {
+    const syncHashRoute = () => {
+      setView(window.location.hash === "#admin" ? "admin" : "site");
+    };
+
+    syncHashRoute();
+    window.addEventListener("hashchange", syncHashRoute);
+    return () => window.removeEventListener("hashchange", syncHashRoute);
+  }, []);
 
   const openAuth = (type) => setAuthType(type);
 
