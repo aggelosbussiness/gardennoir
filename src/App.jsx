@@ -46,7 +46,14 @@ const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
 const hasSupabase = Boolean(SUPABASE_URL && SUPABASE_KEY);
 const supabase = hasSupabase ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-const ADMIN_PASSWORD = "garden123";
+const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || "coronavirusc555@gmail.com")
+  .split(",")
+  .map((email) => email.trim().toLowerCase())
+  .filter(Boolean);
+
+function isAdminUser(user) {
+  return Boolean(user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase()));
+}
 
 const localMessagesKey = "gardennoir_messages";
 const localReviewsKey = "gardennoir_reviews";
@@ -874,9 +881,8 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
   );
 }
 
-function AdminView({ messages, setMessages, reviews, setReviews, users, backendMode }) {
-  const [logged, setLogged] = useState(sessionStorage.getItem("gardennoir_admin") === "yes");
-  const [password, setPassword] = useState("");
+function AdminView({ messages, setMessages, reviews, setReviews, users, backendMode, currentUser, openAuth }) {
+  const adminAllowed = isAdminUser(currentUser);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("Όλα");
   const [selected, setSelected] = useState(null);
@@ -890,16 +896,6 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
     const okFilter = filter === "Όλα" || m.status === filter;
     return okSearch && okFilter;
   });
-
-  const login = (e) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem("gardennoir_admin", "yes");
-      setLogged(true);
-    } else {
-      alert("Λάθος κωδικός. Δοκίμασε: garden123");
-    }
-  };
 
   const updateMessage = async (id, data) => {
     if (supabase) {
@@ -976,26 +972,26 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
   const pendingReviews = reviews.filter((r) => r.approved === false);
 
 
-  if (!logged) {
+  if (!adminAllowed) {
     return (
       <main className="admin-login">
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}>
           <span>Admin Command Center</span>
-          <h1>Το control room του κηπουρού.</h1>
-          <p>Backend: <b>{backendMode}</b></p>
-          
+          <h1>Ιδιωτική πρόσβαση διαχειριστή.</h1>
+          <p>Για να μπεις στο admin panel, πρέπει να συνδεθείς με το εγκεκριμένο admin email.</p>
+          {currentUser ? (
+            <p className="error">Το email <b>{currentUser.email}</b> δεν έχει δικαιώματα admin.</p>
+          ) : (
+            <p>Δεν είσαι συνδεδεμένος.</p>
+          )}
         </motion.div>
 
-        <motion.form onSubmit={login} initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }}>
+        <motion.div className="admin-access-card" initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -5 }}>
           <Lock size={44} />
-          <input
-            type="password"
-            placeholder="Κωδικός admin"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="main-btn">Είσοδος</button>
-        </motion.form>
+          <h2>Admin Login</h2>
+          <p>Σύνδεση μόνο με εγκεκριμένο email διαχειριστή.</p>
+          <button className="main-btn" onClick={() => openAuth("login")}>Login ως admin</button>
+        </motion.div>
       </main>
     );
   }
@@ -1007,15 +1003,10 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
           <span>Command Center</span>
           <h1>GardenNoir Admin</h1>
         </div>
-        <button
-          className="ghost-btn"
-          onClick={() => {
-            sessionStorage.removeItem("gardennoir_admin");
-            setLogged(false);
-          }}
-        >
-          <LogOut size={18} /> Έξοδος
-        </button>
+        <div className="admin-user-pill">
+          <ShieldCheck size={18} />
+          {currentUser?.email}
+        </div>
       </div>
 
       <div className="admin-stats">
@@ -1285,6 +1276,8 @@ export default function App() {
                 setReviews={setReviews}
                 users={users}
                 backendMode={backendMode}
+                currentUser={currentUser}
+                openAuth={openAuth}
               />
             </motion.div>
           )}
@@ -1461,6 +1454,28 @@ function Style() {
       .switch-auth { width: 100%; background: transparent; color: rgba(236,253,245,.7); border: 0; margin-top: 12px; font-weight: 900; }
       .spin { animation: spin 1s linear infinite; }
       @keyframes spin { to { transform: rotate(360deg); } }
+      .admin-access-card {
+        background: rgba(255,255,255,.065);
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 34px;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.22);
+        padding: 32px;
+      }
+      .admin-access-card svg { color: #bef264; margin-bottom: 18px; }
+      .admin-access-card h2 { margin: 0 0 10px; font-size: 30px; }
+      .admin-access-card p { color: rgba(236,253,245,.65); line-height: 1.6; }
+      .admin-user-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #052e16;
+        background: #bef264;
+        border-radius: 999px;
+        padding: 12px 16px;
+        font-weight: 1000;
+      }
+
       .admin-login { min-height: 100vh; max-width: 1000px; margin: 0 auto; padding: 140px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
       .admin-login form { padding: 32px; }
       .admin-login svg { color: #bef264; margin-bottom: 18px; }
