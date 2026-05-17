@@ -340,6 +340,62 @@ function AuthModal({ type, setType, onClose, setCurrentUser }) {
   );
 }
 
+
+function BeforeAfterSlider() {
+  const [position, setPosition] = useState(52);
+
+  return (
+    <section className="before-after-section">
+      <div className="before-after-copy">
+        <span>Πριν & μετά</span>
+        <h2>Βλέπουμε τον χώρο, τον οργανώνουμε και παραδίδουμε καθαρό αποτέλεσμα.</h2>
+        <p>
+          Από αυλές με χόρτα και ακαταστασία μέχρι περιποιημένους εξωτερικούς χώρους.
+          Η διαφορά φαίνεται στην εικόνα, στην καθαριότητα και στη σωστή σειρά της εργασίας.
+        </p>
+        <div className="before-after-points">
+          <b>Καθαρισμός χώρου</b>
+          <b>Κλάδεμα & συμμάζεμα</b>
+          <b>Περιποιημένη τελική εικόνα</b>
+        </div>
+      </div>
+
+      <div className="comparison-card">
+        <div className="comparison-stage">
+          <img
+            className="comparison-img comparison-before"
+            src="https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=1300&q=85"
+            alt="Πριν την κηπουρική εργασία"
+          />
+          <div className="comparison-after-wrap" style={{ width: `${position}%` }}>
+            <img
+              className="comparison-img comparison-after"
+              src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1300&q=85"
+              alt="Μετά την κηπουρική εργασία"
+            />
+          </div>
+          <div className="comparison-line" style={{ left: `${position}%` }}>
+            <span></span>
+          </div>
+          <div className="comparison-label before">Πριν</div>
+          <div className="comparison-label after">Μετά</div>
+        </div>
+
+        <input
+          className="comparison-range"
+          type="range"
+          min="18"
+          max="82"
+          value={position}
+          onChange={(e) => setPosition(Number(e.target.value))}
+          aria-label="Σύρετε για να δείτε πριν και μετά"
+        />
+        <small>Σύρετε τη γραμμή για να δείτε τη διαφορά.</small>
+      </div>
+    </section>
+  );
+}
+
 function PublicSite({ reviews, currentUser, openAuth }) {
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -584,35 +640,38 @@ function PublicSite({ reviews, currentUser, openAuth }) {
         <div className="services-intro">
           <div className="section-heading">
             <span>Υπηρεσίες</span>
-            <h2>Οργανωμένες εργασίες για κάθε εξωτερικό χώρο.</h2>
-            <p>Από καθαρισμούς και κλαδέματα μέχρι τακτική συντήρηση, φυτεύσεις και αυτόματο πότισμα. Η εργασία γίνεται με σειρά, καθαρή συνεννόηση και αποτέλεσμα που φαίνεται.</p>
+            <h2>Καθαρές εργασίες, σωστή σειρά, αποτέλεσμα που φαίνεται.</h2>
+            <p>Οι υπηρεσίες μας παρουσιάζονται απλά γιατί έτσι πρέπει να είναι και η δουλειά: ξεκάθαρη, γρήγορη και χωρίς περιττές υποσχέσεις.</p>
           </div>
 
           <div className="service-photo-strip">
             <img src="https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=900&q=85" alt="Κλάδεμα και συντήρηση κήπου" />
             <div>
-              <b>Εκτίμηση χώρου</b>
-              <span>Βλέπουμε την εργασία και προτείνουμε πρακτική λύση.</span>
+              <b>Πρώτα βλέπουμε τον χώρο</b>
+              <span>Μετά προτείνουμε τι πραγματικά χρειάζεται.</span>
             </div>
           </div>
         </div>
 
-        <div className="service-grid">
+        <div className="service-editorial">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.article
-                className="service-card"
+                className="service-row"
                 key={service.title}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.04 }}
               >
-                <span>{service.category}</span>
-                <Icon />
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
+                <div className="service-number">0{index + 1}</div>
+                <div className="service-icon-line"><Icon /></div>
+                <div className="service-row-content">
+                  <span>{service.category}</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                </div>
               </motion.article>
             );
           })}
@@ -626,6 +685,8 @@ function PublicSite({ reviews, currentUser, openAuth }) {
           <button className="green-btn" onClick={() => scrollToSection("contact")}>Ζητήστε εκτίμηση</button>
         </div>
       </section>
+
+      <BeforeAfterSlider />
 
       <section className="why-panel">
         <div className="why-copy">
@@ -3431,6 +3492,422 @@ function Style() {
         .cta-section h2,
         .contact-card h2 {
           font-size: 25px;
+        }
+      }
+
+
+      /* FINAL SERVICE + BEFORE/AFTER PREMIUM POLISH */
+      .page-bg {
+        box-shadow:
+          inset 0 0 0 10px rgba(255,255,255,.28),
+          inset 0 0 0 11px rgba(70,107,53,.08);
+      }
+
+      .services-section {
+        background:
+          radial-gradient(circle at 16% 18%, rgba(70,107,53,.15), transparent 28%),
+          radial-gradient(circle at 86% 70%, rgba(184,145,86,.13), transparent 30%),
+          linear-gradient(135deg, rgba(47,84,39,.10), rgba(255,255,255,.24));
+      }
+
+      .services-intro {
+        align-items: center;
+      }
+
+      .services-intro .section-heading h2 {
+        max-width: 680px;
+      }
+
+      .service-editorial {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 0;
+        margin-top: 22px;
+        border-top: 1px solid rgba(70,107,53,.18);
+        border-bottom: 1px solid rgba(70,107,53,.18);
+      }
+
+      .service-row {
+        display: grid;
+        grid-template-columns: 78px 76px 1fr;
+        gap: 18px;
+        align-items: center;
+        padding: 24px 0;
+        border-bottom: 1px solid rgba(70,107,53,.14);
+        background: transparent;
+        transition: padding .25s ease, background .25s ease;
+      }
+
+      .service-row:last-child {
+        border-bottom: 0;
+      }
+
+      .service-row:hover {
+        padding-left: 16px;
+        padding-right: 16px;
+        background: rgba(255,255,255,.36);
+      }
+
+      .service-number {
+        font-size: 28px;
+        font-weight: 800;
+        color: rgba(52,90,40,.32);
+        letter-spacing: -0.05em;
+      }
+
+      .service-icon-line {
+        width: 56px;
+        height: 56px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: #345a28;
+        background: rgba(255,255,255,.62);
+        border: 1px solid rgba(70,107,53,.16);
+        box-shadow: 0 12px 24px rgba(58,63,47,.07);
+      }
+
+      .service-icon-line svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      .service-row-content {
+        display: grid;
+        grid-template-columns: 150px 280px 1fr;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .service-row-content span {
+        color: #466b35;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 800;
+      }
+
+      .service-row-content h3 {
+        margin: 0;
+        color: #172114;
+        font-size: 24px;
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .service-row-content p {
+        margin: 0;
+        color: #4f5b49;
+        font-size: 16.5px;
+        line-height: 1.62;
+        font-weight: 500;
+      }
+
+      .service-photo-strip {
+        isolation: isolate;
+      }
+
+      .service-photo-strip::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border: 1px solid rgba(255,255,255,.55);
+        border-radius: 34px 34px 76px 34px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .before-after-section {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 78px 28px 58px;
+        display: grid;
+        grid-template-columns: .88fr 1.12fr;
+        gap: 36px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .before-after-section::before {
+        content: "";
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        top: 30px;
+        bottom: 18px;
+        border-radius: 54px;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.16)),
+          radial-gradient(circle at 20% 20%, rgba(70,107,53,.12), transparent 35%);
+        border: 1px solid rgba(70,107,53,.10);
+        z-index: -1;
+      }
+
+      .before-after-copy span {
+        color: #466b35;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 800;
+      }
+
+      .before-after-copy h2 {
+        color: #142010;
+        font-size: clamp(32px, 3.5vw, 48px);
+        line-height: 1.12;
+        letter-spacing: -0.04em;
+        margin: 12px 0;
+        font-weight: 800;
+      }
+
+      .before-after-copy p {
+        color: #4f5b49;
+        font-size: 17px;
+        line-height: 1.75;
+        font-weight: 500;
+      }
+
+      .before-after-points {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .before-after-points b {
+        background: rgba(255,255,255,.60);
+        border: 1px solid rgba(70,107,53,.14);
+        color: #273621;
+        border-radius: 999px;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .comparison-card {
+        position: relative;
+      }
+
+      .comparison-stage {
+        position: relative;
+        height: 520px;
+        overflow: hidden;
+        border-radius: 46px 46px 110px 46px;
+        border: 9px solid rgba(255,255,255,.55);
+        box-shadow: 0 30px 80px rgba(35,45,29,.18);
+        background: #1c2a17;
+        user-select: none;
+      }
+
+      .comparison-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .comparison-before {
+        filter: saturate(.86) contrast(.96) brightness(.82);
+      }
+
+      .comparison-after-wrap {
+        position: absolute;
+        inset: 0 auto 0 0;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .comparison-after {
+        width: 100%;
+        min-width: calc(100vw * 0 + 100%);
+        filter: saturate(1.05) contrast(1.03);
+      }
+
+      .comparison-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: rgba(255,255,255,.88);
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 1px rgba(47,84,39,.22), 0 0 28px rgba(0,0,0,.28);
+      }
+
+      .comparison-line span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 54px;
+        height: 54px;
+        border-radius: 999px;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border: 1px solid rgba(70,107,53,.22);
+        box-shadow: 0 14px 34px rgba(0,0,0,.22);
+      }
+
+      .comparison-line span::before,
+      .comparison-line span::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9px;
+        height: 9px;
+        border-top: 2px solid #345a28;
+        border-left: 2px solid #345a28;
+      }
+
+      .comparison-line span::before {
+        left: 15px;
+        transform: translateY(-50%) rotate(-45deg);
+      }
+
+      .comparison-line span::after {
+        right: 15px;
+        transform: translateY(-50%) rotate(135deg);
+      }
+
+      .comparison-label {
+        position: absolute;
+        top: 18px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 800;
+        background: rgba(20,32,16,.58);
+        backdrop-filter: blur(8px);
+      }
+
+      .comparison-label.before {
+        left: 18px;
+      }
+
+      .comparison-label.after {
+        right: 18px;
+      }
+
+      .comparison-range {
+        width: 100%;
+        margin: 18px 0 8px;
+        accent-color: #466b35;
+      }
+
+      .comparison-card small {
+        display: block;
+        color: #56624d;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      @media (min-width: 681px) and (max-width: 1180px) {
+        .service-row-content {
+          grid-template-columns: 120px 1fr;
+        }
+
+        .service-row-content p {
+          grid-column: 2;
+        }
+
+        .before-after-section {
+          grid-template-columns: 1fr;
+        }
+
+        .comparison-stage {
+          height: 460px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .page-bg {
+          box-shadow:
+            inset 0 0 0 5px rgba(255,255,255,.24),
+            inset 0 0 0 6px rgba(70,107,53,.07);
+        }
+
+        .service-editorial {
+          border-top: 0;
+          border-bottom: 0;
+          gap: 12px;
+        }
+
+        .service-row {
+          grid-template-columns: 46px 1fr;
+          gap: 12px;
+          padding: 16px;
+          border: 1px solid rgba(70,107,53,.12);
+          border-radius: 20px;
+          background: rgba(255,255,255,.46);
+        }
+
+        .service-row:hover {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .service-number {
+          font-size: 22px;
+        }
+
+        .service-icon-line {
+          display: none;
+        }
+
+        .service-row-content {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        .service-row-content h3 {
+          font-size: 20px;
+        }
+
+        .service-row-content p {
+          font-size: 15px;
+          line-height: 1.62;
+        }
+
+        .before-after-section {
+          grid-template-columns: 1fr;
+          padding: 44px 16px 34px;
+          gap: 22px;
+        }
+
+        .before-after-section::before {
+          left: 8px;
+          right: 8px;
+          top: 20px;
+          bottom: 10px;
+          border-radius: 28px;
+        }
+
+        .before-after-copy h2 {
+          font-size: 28px;
+          line-height: 1.18;
+        }
+
+        .before-after-copy p {
+          font-size: 15.5px;
+        }
+
+        .comparison-stage {
+          height: 330px;
+          border-radius: 28px 28px 70px 28px;
+          border-width: 6px;
+        }
+
+        .comparison-line span {
+          width: 46px;
+          height: 46px;
+        }
+
+        .comparison-label {
+          font-size: 12px;
+          top: 12px;
         }
       }
 
