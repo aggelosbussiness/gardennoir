@@ -164,7 +164,7 @@ function Header({ currentUser, setCurrentUser, openAuth }) {
     setTimeout(() => {
       const el = document.getElementById(id);
       if (!el) return;
-      const headerOffset = window.innerWidth <= 680 ? 132 : 132;
+      const headerOffset = window.innerWidth <= 680 ? 108 : 132;
       const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }, 40);
@@ -2917,6 +2917,206 @@ function Style() {
 
         .topbar {
           font-size: 10.5px;
+        }
+      }
+
+
+      /* BALANCED DESKTOP + MOBILE FINAL OVERRIDES */
+      @media (min-width: 681px) {
+        .topbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          height: 42px;
+          min-height: 42px;
+        }
+
+        .header {
+          position: fixed;
+          top: 42px;
+          left: 0;
+          right: 0;
+          z-index: 99;
+          height: 78px;
+          background: rgba(250, 246, 237, .92);
+        }
+
+        main {
+          padding-top: 120px;
+        }
+
+        #home, #works, #story, #services, #projects, #reviews, #contact {
+          scroll-margin-top: 138px;
+        }
+
+        .hero {
+          padding-top: 54px;
+          padding-bottom: 54px;
+          min-height: calc(100vh - 120px);
+          align-items: center;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(48px, 5vw, 76px);
+          max-width: 760px;
+        }
+
+        .hero-copy p {
+          max-width: 640px;
+        }
+
+        .main-hero-img {
+          height: min(590px, calc(100vh - 190px));
+          min-height: 470px;
+        }
+
+        .featured-works {
+          padding-top: 58px;
+        }
+
+        .services-section {
+          padding-top: 72px;
+          padding-bottom: 72px;
+        }
+
+        .section {
+          padding-top: 72px;
+          padding-bottom: 72px;
+        }
+
+        .story-section {
+          padding-top: 70px;
+          padding-bottom: 70px;
+        }
+
+        .story-image img {
+          height: 520px;
+        }
+
+        .work-cards {
+          grid-template-rows: repeat(2, 260px);
+        }
+
+        .gallery-card img {
+          height: 245px;
+        }
+      }
+
+      @media (min-width: 681px) and (max-width: 1180px) {
+        .header {
+          padding: 0 24px;
+        }
+
+        .nav {
+          gap: 4px;
+        }
+
+        .nav button {
+          padding: 9px 9px;
+          font-size: 13px;
+        }
+
+        .brand b {
+          font-size: 19px;
+        }
+
+        .brand small {
+          font-size: 12px;
+        }
+
+        .hero {
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(42px, 5.3vw, 62px);
+        }
+
+        .main-hero-img {
+          min-height: 430px;
+          height: 500px;
+        }
+
+        .service-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 14px;
+        }
+
+        .service-card {
+          border-right: 0;
+        }
+
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .experience-band {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 680px) {
+        .topbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          min-height: 34px;
+          max-height: 34px;
+          overflow: hidden;
+          padding: 6px 10px;
+          gap: 8px;
+          font-size: 10.5px;
+          justify-content: center;
+          white-space: nowrap;
+        }
+
+        .topbar span:first-child {
+          max-width: 130px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .topbar a:nth-of-type(2),
+        .topbar span:last-child {
+          display: none;
+        }
+
+        .header {
+          position: fixed;
+          top: 34px;
+          left: 0;
+          right: 0;
+          z-index: 99;
+          height: 66px;
+          padding: 0 14px;
+          background: rgba(250, 246, 237, .94);
+        }
+
+        .mobile-menu {
+          position: fixed;
+          top: 100px;
+          left: 10px;
+          right: 10px;
+          border-radius: 18px;
+          border: 1px solid rgba(128,111,81,.18);
+          box-shadow: 0 20px 50px rgba(43,53,34,.18);
+        }
+
+        main {
+          padding-top: 100px;
+        }
+
+        #home, #works, #story, #services, #projects, #reviews, #contact {
+          scroll-margin-top: 112px;
+        }
+
+        .hero {
+          padding-top: 24px;
         }
       }
 
