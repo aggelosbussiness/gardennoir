@@ -1138,12 +1138,15 @@ function Style() {
       }
 
 
-      main, .topbar, .header, footer { position: relative; z-index: 1; }
+      main, footer { position: relative; z-index: 1; }
+      main { padding-top: 120px; }
 
       .topbar {
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 80;
+        left: 0;
+        right: 0;
+        z-index: 100;
         background: linear-gradient(135deg, #24451d, #35602a);
         color: #fff;
         min-height: 42px;
@@ -1167,14 +1170,16 @@ function Style() {
       .topbar svg { color: #e1f1d5; }
 
       .header {
-        position: sticky;
+        position: fixed;
         top: 42px;
-        z-index: 79;
+        left: 0;
+        right: 0;
+        z-index: 99;
         height: 78px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(250, 246, 237, .82);
+        background: rgba(250, 246, 237, .90);
         backdrop-filter: blur(22px);
         border-bottom: 1px solid rgba(128, 111, 81, .16);
         padding: 0 34px;
@@ -1267,7 +1272,7 @@ function Style() {
       }
       .mobile-menu {
         position: absolute;
-        top: 78px;
+        top: 120px;
         left: 0;
         right: 0;
         background: #f7f3ea;
@@ -2245,11 +2250,14 @@ function Style() {
       @media (max-width: 680px) {
         .header {
           padding: 0 18px;
-          top: 0;
+          top: 42px;
         }
         .topbar {
-          position: relative;
+          position: fixed;
           justify-content: flex-start;
+        }
+        main {
+          padding-top: 150px;
         }
         .hero, .featured-works, .story-section, .experience-band, .process-strip, .section, .why-panel, .contact-section, .final-trust, .admin {
           padding-left: 18px;
