@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -16,7 +16,6 @@ import {
   Droplets,
   Sprout,
   CheckCircle2,
-  ShieldCheck,
   Lock,
   LogIn,
   UserPlus,
@@ -27,6 +26,9 @@ import {
   Eye,
   ClipboardList,
   MessageSquareText,
+  ArrowRight,
+  ShieldCheck,
+  Hammer,
 } from "lucide-react";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "";
@@ -50,52 +52,66 @@ const contact = {
   hours: "Δευ - Σαβ: 08:00 - 18:00",
 };
 
+const featuredWorks = [
+  {
+    title: "Καθαρισμός αυλής",
+    text: "Απομάκρυνση χόρτων, κλαδιών και άχρηστων φυτικών υλικών.",
+    img: "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    title: "Συντήρηση πρασίνου",
+    text: "Τακτική φροντίδα για καθαρή και περιποιημένη εικόνα.",
+    img: "https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    title: "Φυτεύσεις",
+    text: "Επιλογή φυτών που ταιριάζουν στον χώρο και στο κλίμα.",
+    img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=85",
+  },
+];
+
 const services = [
   {
     icon: Scissors,
     category: "Συντήρηση",
     title: "Κλαδέματα & καθαρισμοί",
     text: "Κλάδεμα δέντρων, καθάρισμα αυλής, θάμνων και ξερών χόρτων με τακτοποιημένη παράδοση χώρου.",
-    image: "https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=900&q=80",
   },
   {
     icon: Trees,
     category: "Κήποι",
     title: "Τακτική συντήρηση κήπου",
     text: "Προγραμματισμένη φροντίδα για κατοικίες και επαγγελματικούς χώρους σε όλη την Αττική.",
-    image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=900&q=80",
   },
   {
     icon: Droplets,
     category: "Πότισμα",
     title: "Αυτόματο πότισμα",
     text: "Έλεγχος, ρύθμιση και τοποθέτηση αυτόματου ποτίσματος για σωστή χρήση νερού.",
-    image: "https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?auto=format&fit=crop&w=900&q=80",
   },
   {
     icon: Sprout,
     category: "Φυτεύσεις",
     title: "Φυτεύσεις & διαμόρφωση",
     text: "Επιλογή φυτών, προτάσεις για τον χώρο και διαμόρφωση με βάση τις ανάγκες του κήπου.",
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
-const projects = [
+const projectGallery = [
   {
     title: "Καθαρισμός εξωτερικού χώρου",
     img: "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    title: "Συντήρηση πρασίνου",
-    img: "https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?auto=format&fit=crop&w=1200&q=85",
   },
   {
     title: "Περιποίηση φυτών",
     img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=1200&q=85",
   },
   {
-    title: "Αυτόματο πότισμα",
+    title: "Συντήρηση γκαζόν",
+    img: "https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    title: "Διαμόρφωση κήπου",
     img: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&w=1200&q=85",
   },
 ];
@@ -155,9 +171,9 @@ function Header({ currentUser, setCurrentUser, openAuth }) {
 
   const links = [
     ["Αρχική", "home"],
-    ["Η εταιρεία", "about"],
+    ["Έργα", "works"],
+    ["Η ιστορία μας", "story"],
     ["Υπηρεσίες", "services"],
-    ["Έργα", "projects"],
     ["Αξιολογήσεις", "reviews"],
     ["Επικοινωνία", "contact"],
   ];
@@ -167,7 +183,6 @@ function Header({ currentUser, setCurrentUser, openAuth }) {
       <div className="topbar">
         <span><MapPin size={15} /> {contact.area}</span>
         <a href={`tel:${contact.phone.replaceAll(" ", "")}`}><Phone size={15} /> {contact.phone}</a>
-        <a href={`tel:${contact.mobile.replaceAll(" ", "")}`}>{contact.mobile}</a>
         <a href={`mailto:${contact.email}`}><Mail size={15} /> {contact.email}</a>
         <span><Clock size={15} /> {contact.hours}</span>
       </div>
@@ -404,124 +419,168 @@ function PublicSite({ reviews, currentUser, openAuth }) {
   };
 
   return (
-    <main>
+    <main className="site-shell">
       <section id="home" className="hero">
-        <div className="hero-media">
-          <img
-            src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1500&q=85"
-            alt="Κηπουρικές εργασίες στην Αττική"
-          />
-          <div className="hero-overlay">
-            <span>Κηπουρικές υπηρεσίες εντός Αττικής</span>
-            <h1>Οικογενειακή κηπουρική επιχείρηση με 25+ χρόνια εμπειρίας.</h1>
-            <p>
-              Αναλαμβάνουμε συντήρηση κήπων, κλαδέματα, καθαρισμούς, φυτεύσεις
-              και αυτόματο πότισμα με ταχύτητα, συνέπεια και καθαρό αποτέλεσμα.
-            </p>
-            <div className="hero-actions">
-              <button className="green-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
-                Ζητήστε προσφορά
-              </button>
-              <a className="white-btn" href={`tel:${contact.phone.replaceAll(" ", "")}`}>
-                <Phone size={18} /> {contact.phone}
-              </a>
-            </div>
+        <div className="hero-copy">
+          <span className="eyebrow">25+ χρόνια εμπειρίας στην Αττική</span>
+          <h1>Κηπουρικές υπηρεσίες με πραγματική εμπειρία και καθαρό αποτέλεσμα.</h1>
+          <p>
+            Οικογενειακή επιχείρηση που αναλαμβάνει κλαδέματα, καθαρισμούς, φυτεύσεις,
+            συντήρηση κήπων και αυτόματο πότισμα σε όλη την Αττική.
+          </p>
+
+          <div className="hero-actions">
+            <button className="green-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
+              Ζητήστε προσφορά <ArrowRight size={18} />
+            </button>
+            <a className="white-btn" href={`tel:${contact.phone.replaceAll(" ", "")}`}>
+              <Phone size={18} /> {contact.phone}
+            </a>
+          </div>
+
+          <div className="hero-trust">
+            <div><b>25+</b><span>χρόνια εμπειρίας</span></div>
+            <div><b>Αττική</b><span>εξυπηρέτηση</span></div>
+            <div><b>{avg}/5</b><span>αξιολόγηση</span></div>
           </div>
         </div>
 
-        <aside className="quote-panel">
-          <span>CONTACT US</span>
-          <h2>{contact.phone}</h2>
-          <p>Καλέστε μας ή στείλτε αίτημα και θα επικοινωνήσουμε μαζί σας για διαθεσιμότητα και κόστος.</p>
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
-        </aside>
-      </section>
-
-      <section className="quick-stats">
-        <div><b>25+</b><span>χρόνια εμπειρίας</span></div>
-        <div><b>Αττική</b><span>περιοχές εξυπηρέτησης</span></div>
-        <div><b>Άμεσα</b><span>επικοινωνία & εκτίμηση</span></div>
-        <div><b>{avg}/5</b><span>μέση αξιολόγηση</span></div>
-      </section>
-
-      <section id="about" className="about-section">
-        <div>
-          <span className="eyebrow">A few words about us</span>
-          <h2>Επαγγελματική φροντίδα κήπων με εμπειρία και συνέπεια.</h2>
+        <div className="hero-showcase">
+          <img className="main-hero-img" src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1400&q=85" alt="Κηπουρικές εργασίες" />
+          <div className="floating-card">
+            <ShieldCheck />
+            <b>Άμεση εκτίμηση εργασίας</b>
+            <span>Επικοινωνούμε για κόστος και διαθεσιμότητα.</span>
+          </div>
         </div>
-        <div>
+      </section>
+
+      <section id="works" className="featured-works">
+        <div className="section-heading left">
+          <span>Τα έργα μας</span>
+          <h2>Πριν τις υπηρεσίες, δείχνουμε τη δουλειά.</h2>
           <p>
-            Η GardenNoir είναι οικογενειακή επιχείρηση που δραστηριοποιείται στις κηπουρικές
-            υπηρεσίες εντός Αττικής. Με εμπειρία άνω των 25 ετών, αναλαμβάνουμε εργασίες
-            για κατοικίες και επαγγελματικούς χώρους με στόχο την καθαρή εικόνα, τη σωστή
-            συντήρηση και την άμεση εξυπηρέτηση.
+            Ο πελάτης θέλει πρώτα να δει εικόνα, καθαριότητα και αποτέλεσμα.
+            Γι’ αυτό τα έργα μπαίνουν μπροστά: δείχνουν τι μπορεί να γίνει σε έναν χώρο.
           </p>
-          <button className="green-btn" onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}>
-            Δείτε υπηρεσίες
-          </button>
+        </div>
+
+        <div className="work-cards">
+          {featuredWorks.map((work, index) => (
+            <motion.article
+              className={`work-card ${index === 0 ? "large" : ""}`}
+              key={work.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <img src={work.img} alt={work.title} />
+              <div>
+                <span>0{index + 1}</span>
+                <h3>{work.title}</h3>
+                <p>{work.text}</p>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </section>
 
-      <section id="services" className="section">
-        <div className="section-title">
-          <span>GET A BETTER GARDEN</span>
-          <h2>Οι υπηρεσίες μας</h2>
-          <p>Από την πιο απλή εργασία μέχρι την ολοκληρωμένη φροντίδα του κήπου.</p>
+      <section id="story" className="story-section">
+        <div className="story-image">
+          <img src="https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=1200&q=85" alt="Εμπειρία στην κηπουρική" />
         </div>
 
-        <div className="service-layout">
+        <div className="story-copy">
+          <span className="eyebrow">Η ιστορία μας</span>
+          <h2>Οικογενειακή επιχείρηση με 25+ χρόνια στον χώρο της κηπουρικής.</h2>
+          <p>
+            Η GardenNoir δημιουργήθηκε πάνω σε πραγματική εμπειρία στην κηπουρική
+            και στη φροντίδα εξωτερικών χώρων. Δεν βασιζόμαστε σε έτοιμες λύσεις·
+            βλέπουμε τον χώρο, ακούμε την ανάγκη του πελάτη και προτείνουμε πρακτική λύση.
+          </p>
+          <p>
+            Στόχος μας είναι κάθε εργασία να παραδίδεται καθαρά, γρήγορα και με εικόνα
+            που κάνει τον χώρο πιο όμορφο και πιο εύχρηστο.
+          </p>
+
+          <div className="story-points">
+            <div><CheckCircle2 /><span>Συνέπεια στα ραντεβού</span></div>
+            <div><CheckCircle2 /><span>Καθαρή παράδοση χώρου</span></div>
+            <div><CheckCircle2 /><span>Εξυπηρέτηση εντός Αττικής</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="experience-band">
+        <div>
+          <b>25+</b>
+          <span>χρόνια εμπειρίας</span>
+        </div>
+        <div>
+          <b>2</b>
+          <span>γενιές στη δουλειά</span>
+        </div>
+        <div>
+          <b>Άμεσα</b>
+          <span>επικοινωνία & εκτίμηση</span>
+        </div>
+        <div>
+          <b>Καθαρά</b>
+          <span>παράδοση χώρου</span>
+        </div>
+      </section>
+
+      <section id="services" className="section services-section">
+        <div className="section-heading">
+          <span>Υπηρεσίες</span>
+          <h2>Οργανωμένες εργασίες για κάθε εξωτερικό χώρο.</h2>
+          <p>Από καθαρισμούς και κλαδέματα μέχρι τακτική συντήρηση και αυτόματο πότισμα.</p>
+        </div>
+
+        <div className="service-grid">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.article
-                className="service-box"
+                className="service-card"
                 key={service.title}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.04 }}
               >
-                <img src={service.image} alt={service.title} />
-                <div>
-                  <span>{service.category}</span>
-                  <Icon />
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
-                </div>
+                <span>{service.category}</span>
+                <Icon />
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
               </motion.article>
             );
           })}
         </div>
       </section>
 
-      <section className="why-strip">
-        <div>
-          <CheckCircle2 />
-          <h3>Γρήγορη εξυπηρέτηση</h3>
-          <p>Άμεση επικοινωνία και σωστή συνεννόηση για την εργασία.</p>
+      <section className="why-panel">
+        <div className="why-copy">
+          <span>Γιατί να μας επιλέξετε</span>
+          <h2>Η διαφορά φαίνεται στην οργάνωση και στο τελικό αποτέλεσμα.</h2>
         </div>
-        <div>
-          <CheckCircle2 />
-          <h3>Καθαρό αποτέλεσμα</h3>
-          <p>Ο χώρος παραδίδεται περιποιημένος μετά την ολοκλήρωση.</p>
-        </div>
-        <div>
-          <CheckCircle2 />
-          <h3>Πραγματική εμπειρία</h3>
-          <p>25+ χρόνια στην κηπουρική και στη συντήρηση εξωτερικών χώρων.</p>
+
+        <div className="why-list">
+          <div><CheckCircle2 /><b>Γρήγορη εξυπηρέτηση</b><p>Άμεση επικοινωνία και καθαρή συνεννόηση για την εργασία.</p></div>
+          <div><CheckCircle2 /><b>Πραγματική εμπειρία</b><p>25+ χρόνια στον χώρο της κηπουρικής και συντήρησης πρασίνου.</p></div>
+          <div><CheckCircle2 /><b>Καθαρή παράδοση</b><p>Ο χώρος παραδίδεται περιποιημένος μετά την ολοκλήρωση.</p></div>
         </div>
       </section>
 
       <section id="projects" className="section">
-        <div className="section-title">
-          <span>Projects</span>
-          <h2>Ενδεικτικές εργασίες</h2>
-          <p>Εικόνες που δείχνουν το ύφος της δουλειάς: τάξη, καθαριότητα και περιποιημένο αποτέλεσμα.</p>
+        <div className="section-heading">
+          <span>Gallery</span>
+          <h2>Ενδεικτικές εικόνες εργασιών</h2>
         </div>
 
-        <div className="project-grid">
-          {projects.map((project) => (
-            <article key={project.title} className="project-card">
+        <div className="gallery-grid">
+          {projectGallery.map((project) => (
+            <article className="gallery-card" key={project.title}>
               <img src={project.img} alt={project.title} />
               <h3>{project.title}</h3>
             </article>
@@ -529,20 +588,23 @@ function PublicSite({ reviews, currentUser, openAuth }) {
         </div>
       </section>
 
-      <section className="slogan">
-        <h2>Ένας περιποιημένος κήπος αλλάζει την εικόνα όλου του χώρου.</h2>
-        <button className="green-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
-          Ζητήστε προσφορά
+      <section className="cta-section">
+        <div>
+          <span>Ζητήστε προσφορά</span>
+          <h2>Θέλετε να καθαρίσετε, να συντηρήσετε ή να ανανεώσετε τον κήπο σας;</h2>
+        </div>
+        <button className="white-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
+          Επικοινωνήστε μαζί μας
         </button>
       </section>
 
-      <section id="reviews" className="section">
-        <div className="section-title">
-          <span>Reviews</span>
-          <h2>Αξιολογήσεις πελατών</h2>
+      <section id="reviews" className="section reviews-section">
+        <div className="section-heading">
+          <span>Αξιολογήσεις</span>
+          <h2>Τι λένε οι πελάτες μας</h2>
         </div>
 
-        <div className="reviews-wrap">
+        <div className="reviews-layout">
           <div className="review-list">
             {approvedReviews.map((review) => (
               <article className="review-card" key={review.id}>
@@ -586,9 +648,9 @@ function PublicSite({ reviews, currentUser, openAuth }) {
 
       <section id="contact" className="contact-section">
         <div className="contact-card">
-          <span>CONTACT</span>
-          <h2>Request a quote</h2>
-          <p>Στείλτε μας τι εργασία χρειάζεστε και θα επικοινωνήσουμε μαζί σας για λεπτομέρειες.</p>
+          <span>Επικοινωνία</span>
+          <h2>Πείτε μας τι χρειάζεται ο χώρος σας.</h2>
+          <p>Στείλτε μας την εργασία που θέλετε και θα επικοινωνήσουμε μαζί σας για λεπτομέρειες, κόστος και διαθεσιμότητα.</p>
 
           <a href={`tel:${contact.phone.replaceAll(" ", "")}`}><Phone /> {contact.phone}</a>
           <a href={`tel:${contact.mobile.replaceAll(" ", "")}`}><Phone /> {contact.mobile}</a>
@@ -619,7 +681,7 @@ function PublicSite({ reviews, currentUser, openAuth }) {
             onChange={(e) => setForm({ ...form, subject: e.target.value })}
           />
 
-          <button className="green-btn"><Send size={18} /> SEND</button>
+          <button className="green-btn"><Send size={18} /> Αποστολή αιτήματος</button>
 
           {sent && <div className="success">Το αίτημά σας καταχωρήθηκε επιτυχώς. Θα επικοινωνήσουμε μαζί σας σύντομα.</div>}
           {error && <div className="error">{error}</div>}
@@ -916,30 +978,32 @@ export default function App() {
   return (
     <>
       <Style />
-      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} openAuth={setAuthType} />
+      <div className="page-bg">
+        <Header currentUser={currentUser} setCurrentUser={setCurrentUser} openAuth={setAuthType} />
 
-      <AnimatePresence mode="wait">
-        {route === "admin" ? (
-          <motion.div key="admin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <AdminPanel currentUser={currentUser} openAuth={setAuthType} />
-          </motion.div>
-        ) : (
-          <motion.div key="site" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <PublicSite reviews={reviews} currentUser={currentUser} openAuth={setAuthType} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence mode="wait">
+          {route === "admin" ? (
+            <motion.div key="admin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <AdminPanel currentUser={currentUser} openAuth={setAuthType} />
+            </motion.div>
+          ) : (
+            <motion.div key="site" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <PublicSite reviews={reviews} currentUser={currentUser} openAuth={setAuthType} />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      <AnimatePresence>
-        {authType && (
-          <AuthModal
-            type={authType}
-            setType={setAuthType}
-            onClose={() => setAuthType(null)}
-            setCurrentUser={setCurrentUser}
-          />
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {authType && (
+            <AuthModal
+              type={authType}
+              setType={setAuthType}
+              onClose={() => setAuthType(null)}
+              setCurrentUser={setCurrentUser}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }
@@ -951,16 +1015,51 @@ function Style() {
       html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        background: #f7f3ea;
-        color: #1d261b;
+        color: #182315;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         overflow-x: hidden;
+        background: #efe7d7;
       }
       button, input, textarea, select { font-family: inherit; }
       button { cursor: pointer; }
-      main { background: #f7f3ea; min-height: 100vh; }
+      .page-bg {
+        position: relative;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 8% 12%, rgba(52, 90, 40, .20), transparent 22%),
+          radial-gradient(circle at 92% 18%, rgba(186, 143, 82, .18), transparent 24%),
+          radial-gradient(circle at 10% 78%, rgba(52, 90, 40, .12), transparent 28%),
+          linear-gradient(180deg, #f7f1e6 0%, #efe7d7 52%, #f8f3ea 100%);
+      }
+      .page-bg::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .12;
+        background-image:
+          linear-gradient(45deg, rgba(52,90,40,.55) 1px, transparent 1px),
+          linear-gradient(-45deg, rgba(52,90,40,.35) 1px, transparent 1px);
+        background-size: 54px 54px;
+        mask-image: radial-gradient(circle at center, transparent 16%, black 75%);
+      }
+      .page-bg::after {
+        content: "";
+        position: fixed;
+        right: -180px;
+        top: 160px;
+        width: 460px;
+        height: 460px;
+        border-radius: 999px;
+        pointer-events: none;
+        opacity: .18;
+        background: radial-gradient(circle, rgba(52,90,40,.45), transparent 65%);
+        filter: blur(6px);
+      }
 
       .topbar {
+        position: relative;
+        z-index: 20;
         background: #2f5427;
         color: #fff;
         min-height: 42px;
@@ -970,7 +1069,7 @@ function Style() {
         gap: 24px;
         padding: 8px 18px;
         font-size: 14px;
-        font-weight: 800;
+        font-weight: 850;
         flex-wrap: wrap;
       }
       .topbar span, .topbar a {
@@ -990,10 +1089,11 @@ function Style() {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(250, 246, 237, .94);
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid #e2dacb;
+        background: rgba(250, 246, 237, .90);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(128, 111, 81, .18);
         padding: 0 34px;
+        box-shadow: 0 12px 30px rgba(43, 53, 34, .06);
       }
       .brand {
         border: 0;
@@ -1017,11 +1117,7 @@ function Style() {
       .brand b { display: block; font-size: 21px; }
       .brand small { display: block; color: #607054; font-weight: 850; }
 
-      .nav {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
+      .nav { display: flex; align-items: center; gap: 8px; }
       .nav button {
         border: 0;
         background: transparent;
@@ -1050,17 +1146,13 @@ function Style() {
       }
       .green-btn.small { padding: 10px 14px; }
       .white-btn, .light-btn {
-        background: #fff;
+        background: rgba(255,255,255,.86);
         color: #273621;
         padding: 12px 16px;
-        border: 1px solid #e0d7c8;
-        box-shadow: 0 10px 24px rgba(58,63,47,.06);
+        border: 1px solid rgba(128, 111, 81, .20);
+        box-shadow: 0 10px 24px rgba(58,63,47,.07);
       }
-      .danger-btn {
-        background: #a23b2a;
-        color: #fff;
-        padding: 10px 14px;
-      }
+      .danger-btn { background: #a23b2a; color: #fff; padding: 10px 14px; }
       .link-btn {
         background: transparent;
         color: #345a28;
@@ -1096,284 +1188,402 @@ function Style() {
         font-weight: 900;
       }
 
+      main { position: relative; z-index: 1; }
+
       .hero {
-        max-width: 1240px;
+        max-width: 1220px;
         margin: 0 auto;
-        padding: 34px 28px 26px;
+        padding: 70px 28px 44px;
         display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 22px;
+        grid-template-columns: .9fr 1.1fr;
+        gap: 34px;
+        align-items: center;
       }
-      .hero-media {
-        position: relative;
-        min-height: 590px;
-        border-radius: 34px;
-        overflow: hidden;
-        box-shadow: 0 26px 70px rgba(51, 60, 42, .17);
-        background: #1f2a1a;
-      }
-      .hero-media img {
-        width: 100%;
-        height: 100%;
-        min-height: 590px;
-        object-fit: cover;
-        display: block;
-        filter: saturate(1.02);
-      }
-      .hero-media::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(20,35,19,.78), rgba(20,35,19,.36) 48%, rgba(20,35,19,.18));
-      }
-      .hero-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 770px;
-        padding: 54px;
-        color: #fff;
-      }
-      .hero-overlay span, .section-title span, .eyebrow, .contact-card span, .admin-head span {
-        color: #dff2c8;
+      .eyebrow, .section-heading span, .why-copy span, .contact-card span, .admin-head span {
+        color: #466b35;
         font-size: 13px;
         text-transform: uppercase;
         letter-spacing: .16em;
         font-weight: 1000;
       }
-      .hero-overlay h1 {
-        font-size: clamp(42px, 5.4vw, 78px);
-        line-height: .98;
-        letter-spacing: -2.8px;
+      .hero-copy h1 {
+        color: #162311;
+        font-size: clamp(44px, 5.8vw, 82px);
+        line-height: .96;
+        letter-spacing: -3px;
         margin: 16px 0;
-        color: #fff;
       }
-      .hero-overlay p {
+      .hero-copy p {
+        color: #5c6753;
         font-size: 19px;
         line-height: 1.75;
-        color: rgba(255,255,255,.86);
         max-width: 680px;
       }
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 20px;
+        margin-top: 24px;
       }
-      .quote-panel {
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 34px;
-        padding: 28px;
-        box-shadow: 0 18px 45px rgba(58,63,47,.10);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .quote-panel span {
-        color: #466b35;
-        font-weight: 1000;
-        letter-spacing: .16em;
-        font-size: 12px;
-      }
-      .quote-panel h2 {
-        color: #172214;
-        font-size: 34px;
-        margin: 14px 0;
-      }
-      .quote-panel p {
-        color: #65705c;
-        line-height: 1.7;
-      }
-      .quote-panel a {
-        color: #345a28;
-        font-weight: 950;
-        text-decoration: none;
-        margin-top: 12px;
-      }
-
-      .quick-stats {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 0 28px 56px;
+      .hero-trust {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 28px;
+        max-width: 620px;
       }
-      .quick-stats div {
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 22px;
-        padding: 22px;
-        box-shadow: 0 14px 34px rgba(58,63,47,.07);
+      .hero-trust div {
+        background: rgba(255,255,255,.78);
+        border: 1px solid rgba(128, 111, 81, .18);
+        border-radius: 18px;
+        padding: 16px;
+        box-shadow: 0 12px 30px rgba(58,63,47,.06);
       }
-      .quick-stats b {
+      .hero-trust b {
         display: block;
-        color: #466b35;
-        font-size: 30px;
-        margin-bottom: 4px;
+        color: #345a28;
+        font-size: 25px;
       }
-      .quick-stats span {
+      .hero-trust span {
         color: #65705c;
         font-weight: 850;
+        font-size: 13px;
       }
 
-      .about-section {
-        max-width: 1180px;
-        margin: 0 auto 26px;
-        padding: 44px;
-        display: grid;
-        grid-template-columns: .9fr 1.1fr;
-        gap: 30px;
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 32px;
-        box-shadow: 0 18px 45px rgba(58,63,47,.08);
+      .hero-showcase {
+        position: relative;
       }
-      .about-section h2, .section-title h2, .slogan h2, .contact-card h2, .admin h1 {
+      .main-hero-img {
+        width: 100%;
+        height: 620px;
+        object-fit: cover;
+        display: block;
+        border-radius: 42px;
+        box-shadow: 0 35px 90px rgba(47, 63, 38, .20);
+        border: 10px solid rgba(255,255,255,.58);
+      }
+      .floating-card {
+        position: absolute;
+        left: -24px;
+        bottom: 34px;
+        max-width: 300px;
+        background: rgba(255,255,255,.94);
+        border: 1px solid rgba(128, 111, 81, .18);
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: 0 22px 54px rgba(58,63,47,.16);
+      }
+      .floating-card svg { color: #466b35; }
+      .floating-card b {
+        display: block;
+        margin: 8px 0 4px;
         color: #172214;
-        font-size: clamp(34px, 4.4vw, 56px);
-        line-height: 1.05;
-        letter-spacing: -1.9px;
+      }
+      .floating-card span {
+        color: #65705c;
+        line-height: 1.5;
+        font-weight: 760;
+      }
+
+      .featured-works, .story-section, .experience-band, .section, .why-panel, .cta-section, .contact-section {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      .section-heading {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .section-heading.left { text-align: left; }
+      .section-heading h2, .story-copy h2, .why-copy h2, .cta-section h2, .contact-card h2, .admin h1 {
+        color: #172214;
+        font-size: clamp(34px, 4.4vw, 58px);
+        line-height: 1.04;
+        letter-spacing: -2px;
         margin: 12px 0;
       }
-      .about-section p, .section-title p, .contact-card p {
+      .section-heading p, .story-copy p, .contact-card p {
         color: #65705c;
         line-height: 1.8;
         font-size: 17px;
       }
 
-      .section {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 70px 28px;
+      .featured-works {
+        padding-top: 40px;
+        padding-bottom: 72px;
       }
-      .section-title {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      .section-title span {
-        color: #466b35;
-      }
-      .service-layout {
+      .work-cards {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1.35fr .9fr;
+        grid-template-rows: repeat(2, 250px);
         gap: 18px;
       }
-      .service-box {
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 28px;
+      .work-card {
+        position: relative;
         overflow: hidden;
-        box-shadow: 0 18px 45px rgba(58,63,47,.08);
-        display: grid;
-        grid-template-columns: 190px 1fr;
+        border-radius: 32px;
+        box-shadow: 0 22px 64px rgba(58,63,47,.13);
+        background: #1d2c18;
       }
-      .service-box img {
+      .work-card.large {
+        grid-row: span 2;
+      }
+      .work-card img {
         width: 100%;
         height: 100%;
-        min-height: 230px;
         object-fit: cover;
-      }
-      .service-box div {
-        padding: 24px;
-      }
-      .service-box span {
-        color: #466b35;
-        font-weight: 1000;
-        text-transform: uppercase;
-        letter-spacing: .12em;
-        font-size: 12px;
-      }
-      .service-box svg {
-        color: #466b35;
         display: block;
-        margin: 14px 0;
+        transition: .4s;
       }
-      .service-box h3 {
-        color: #1b2817;
-        font-size: 24px;
-        margin: 0 0 10px;
+      .work-card:hover img {
+        transform: scale(1.04);
       }
-      .service-box p {
-        color: #65705c;
-        line-height: 1.65;
+      .work-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(17,30,14,.82), rgba(17,30,14,.05));
+      }
+      .work-card div {
+        position: absolute;
+        z-index: 2;
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+        color: #fff;
+      }
+      .work-card span {
+        color: #dff2c8;
+        font-weight: 1000;
+      }
+      .work-card h3 {
+        margin: 6px 0;
+        font-size: 27px;
+      }
+      .work-card p {
+        margin: 0;
+        color: rgba(255,255,255,.82);
+        line-height: 1.55;
       }
 
-      .why-strip {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 34px 28px;
+      .story-section {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        grid-template-columns: .9fr 1.1fr;
+        gap: 32px;
+        padding-top: 50px;
+        padding-bottom: 70px;
+        align-items: center;
       }
-      .why-strip div {
-        background: #e8f1dd;
-        border: 1px solid #d6e4c8;
-        border-radius: 24px;
-        padding: 24px;
+      .story-image img {
+        width: 100%;
+        height: 560px;
+        object-fit: cover;
+        border-radius: 36px;
+        display: block;
+        box-shadow: 0 28px 75px rgba(58,63,47,.16);
+        border: 10px solid rgba(255,255,255,.56);
       }
-      .why-strip svg {
+      .story-copy {
+        background: rgba(255,255,255,.82);
+        border: 1px solid rgba(128,111,81,.18);
+        border-radius: 34px;
+        padding: 38px;
+        box-shadow: 0 20px 50px rgba(58,63,47,.08);
+      }
+      .story-points {
+        display: grid;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .story-points div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f5efdf;
+        border-radius: 16px;
+        padding: 13px;
+        color: #273621;
+        font-weight: 900;
+      }
+      .story-points svg {
         color: #466b35;
       }
-      .why-strip h3 {
-        color: #172214;
-        margin-bottom: 8px;
-      }
-      .why-strip p {
-        color: #65705c;
-        line-height: 1.6;
-      }
 
-      .project-grid {
+      .experience-band {
+        padding-top: 10px;
+        padding-bottom: 60px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 14px;
       }
-      .project-card {
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 14px 34px rgba(58,63,47,.08);
+      .experience-band div {
+        background: linear-gradient(135deg, #345a28, #557838);
+        border-radius: 26px;
+        color: #fff;
+        padding: 24px;
+        box-shadow: 0 18px 44px rgba(52,90,40,.18);
       }
-      .project-card img {
+      .experience-band b {
+        display: block;
+        font-size: 31px;
+      }
+      .experience-band span {
+        color: rgba(255,255,255,.82);
+        font-weight: 850;
+      }
+
+      .section {
+        padding-top: 70px;
+        padding-bottom: 70px;
+      }
+      .services-section {
+        background: rgba(255,255,255,.45);
+        border-radius: 44px;
+        border: 1px solid rgba(128,111,81,.14);
+        box-shadow: 0 18px 55px rgba(58,63,47,.06);
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .service-card {
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(128,111,81,.18);
+        border-radius: 26px;
+        padding: 24px;
+        box-shadow: 0 16px 40px rgba(58,63,47,.08);
+      }
+      .service-card span {
+        color: #466b35;
+        font-weight: 1000;
+        text-transform: uppercase;
+        letter-spacing: .13em;
+        font-size: 12px;
+      }
+      .service-card svg {
+        color: #466b35;
+        margin: 18px 0;
+      }
+      .service-card h3 {
+        color: #172214;
+        font-size: 22px;
+        margin: 0 0 10px;
+      }
+      .service-card p {
+        color: #65705c;
+        line-height: 1.7;
+      }
+
+      .why-panel {
+        padding-top: 70px;
+        padding-bottom: 70px;
+        display: grid;
+        grid-template-columns: .9fr 1.1fr;
+        gap: 24px;
+      }
+      .why-copy {
+        background: #2f5427;
+        color: #fff;
+        border-radius: 34px;
+        padding: 34px;
+      }
+      .why-copy span {
+        color: #dff2c8;
+        font-weight: 1000;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+      .why-copy h2 {
+        color: #fff;
+      }
+      .why-list {
+        display: grid;
+        gap: 14px;
+      }
+      .why-list div {
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(128,111,81,.18);
+        border-radius: 26px;
+        padding: 24px;
+        box-shadow: 0 16px 40px rgba(58,63,47,.08);
+      }
+      .why-list svg {
+        color: #466b35;
+      }
+      .why-list b {
+        display: block;
+        margin: 8px 0;
+        color: #172214;
+        font-size: 20px;
+      }
+      .why-list p {
+        color: #65705c;
+        line-height: 1.65;
+        margin: 0;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .gallery-card {
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(128,111,81,.18);
+        border-radius: 26px;
+        overflow: hidden;
+        box-shadow: 0 16px 40px rgba(58,63,47,.08);
+      }
+      .gallery-card img {
         width: 100%;
-        height: 240px;
+        height: 235px;
         object-fit: cover;
         display: block;
       }
-      .project-card h3 {
+      .gallery-card h3 {
         margin: 0;
         padding: 17px;
-        color: #1b2817;
+        color: #172214;
         font-size: 19px;
       }
 
-      .slogan {
-        max-width: 1180px;
-        margin: 20px auto;
-        padding: 54px 32px;
-        border-radius: 34px;
+      .cta-section {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-top: 54px;
+        padding-bottom: 54px;
+        padding-left: 38px;
+        padding-right: 38px;
+        border-radius: 38px;
         background:
-          linear-gradient(135deg, rgba(47,84,39,.92), rgba(78,113,55,.90)),
+          linear-gradient(135deg, rgba(47,84,39,.94), rgba(80,112,55,.90)),
           url("https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=80");
         background-size: cover;
         background-position: center;
         color: #fff;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+        box-shadow: 0 24px 70px rgba(47,84,39,.20);
       }
-      .slogan h2 {
+      .cta-section span {
+        color: #dff2c8;
+        text-transform: uppercase;
+        letter-spacing: .16em;
+        font-weight: 1000;
+        font-size: 13px;
+      }
+      .cta-section h2 {
         color: #fff;
-        max-width: 820px;
-        margin: 0 auto 20px;
+        max-width: 790px;
       }
 
-      .reviews-wrap {
+      .reviews-layout {
         display: grid;
         grid-template-columns: 1.1fr .9fr;
         gap: 20px;
@@ -1384,10 +1594,10 @@ function Style() {
         gap: 14px;
       }
       .review-card, .review-form, .contact-card, .quote-form, .admin-review-box, .message-list, .message-detail, .admin-login-card, .auth-box {
-        background: #fff;
-        border: 1px solid #e2dacb;
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(128,111,81,.18);
         border-radius: 26px;
-        box-shadow: 0 14px 34px rgba(58,63,47,.08);
+        box-shadow: 0 16px 40px rgba(58,63,47,.08);
       }
       .review-card, .review-form {
         padding: 24px;
@@ -1399,7 +1609,7 @@ function Style() {
       }
       .review-top h3 {
         margin: 0;
-        color: #1b2817;
+        color: #172214;
       }
       .review-top small {
         color: #798170;
@@ -1412,8 +1622,8 @@ function Style() {
         color: #466b35;
       }
       .review-form h3 {
-        font-size: 25px;
         color: #172214;
+        font-size: 25px;
         margin: 10px 0;
       }
       .stars {
@@ -1432,9 +1642,8 @@ function Style() {
       }
 
       .contact-section {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 70px 28px 80px;
+        padding-top: 70px;
+        padding-bottom: 80px;
         display: grid;
         grid-template-columns: .9fr 1.1fr;
         gap: 20px;
@@ -1442,14 +1651,18 @@ function Style() {
       .contact-card, .quote-form {
         padding: 30px;
       }
-      .contact-card span {
-        color: #466b35;
+      .contact-card h2 {
+        color: #172214;
+      }
+      .contact-card p {
+        color: #65705c;
+        line-height: 1.75;
       }
       .contact-card a, .contact-card div {
         display: flex;
         align-items: center;
         gap: 10px;
-        background: #f7f3ea;
+        background: #f7f1e6;
         color: #1d261b;
         text-decoration: none;
         font-weight: 900;
@@ -1460,6 +1673,7 @@ function Style() {
       .contact-card svg {
         color: #466b35;
       }
+
       input, textarea, select {
         width: 100%;
         border: 1px solid #ded5c5;
@@ -1505,6 +1719,8 @@ function Style() {
         gap: 28px;
         flex-wrap: wrap;
         text-align: center;
+        position: relative;
+        z-index: 1;
       }
       footer b {
         color: #fff;
@@ -1624,7 +1840,7 @@ function Style() {
         display: flex;
         justify-content: space-between;
         gap: 16px;
-        background: #f7f3ea;
+        background: #f7f1e6;
         border-radius: 18px;
         padding: 16px;
       }
@@ -1675,7 +1891,7 @@ function Style() {
         display: flex;
         align-items: center;
         gap: 10px;
-        background: #f7f3ea;
+        background: #f7f1e6;
         border-radius: 16px;
         padding: 0 12px;
         margin-bottom: 12px;
@@ -1770,7 +1986,7 @@ function Style() {
         display: flex;
         gap: 10px;
         align-items: flex-start;
-        background: #f7f3ea;
+        background: #f7f1e6;
         border-radius: 16px;
         padding: 14px;
         color: #1d261b;
@@ -1794,22 +2010,35 @@ function Style() {
       @media (max-width: 1050px) {
         .desktop { display: none; }
         .menu-btn { display: block; }
-        .hero, .about-section, .reviews-wrap, .contact-section, .admin-grid { grid-template-columns: 1fr; }
-        .quote-panel { order: -1; }
-        .service-layout { grid-template-columns: 1fr; }
-        .project-grid, .quick-stats, .why-strip { grid-template-columns: repeat(2, 1fr); }
+        .hero, .story-section, .why-panel, .reviews-layout, .contact-section, .admin-grid { grid-template-columns: 1fr; }
+        .hero-showcase { order: -1; }
+        .service-grid { grid-template-columns: repeat(2, 1fr); }
+        .gallery-grid, .experience-band { grid-template-columns: repeat(2, 1fr); }
+        .work-cards {
+          grid-template-columns: 1fr;
+          grid-template-rows: none;
+        }
+        .work-card, .work-card.large {
+          height: 330px;
+          grid-row: auto;
+        }
         .review-list { grid-template-columns: 1fr; }
+        .cta-section { flex-direction: column; align-items: flex-start; }
+        .floating-card { left: 20px; }
       }
       @media (max-width: 680px) {
         .header { padding: 0 18px; }
         .topbar { justify-content: flex-start; }
-        .hero, .section, .contact-section, .admin { padding-left: 18px; padding-right: 18px; }
-        .hero-media, .hero-media img { min-height: 610px; }
-        .hero-overlay { padding: 30px; justify-content: end; }
-        .hero-overlay h1 { font-size: 40px; }
-        .quick-stats, .project-grid, .why-strip, .two { grid-template-columns: 1fr; }
-        .service-box { grid-template-columns: 1fr; }
-        .service-box img { height: 220px; }
+        .hero, .featured-works, .story-section, .experience-band, .section, .why-panel, .contact-section, .admin {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        .hero-copy h1 { font-size: 42px; }
+        .main-hero-img { height: 450px; }
+        .floating-card { position: static; margin-top: 14px; max-width: none; }
+        .hero-trust, .service-grid, .gallery-grid, .experience-band, .two { grid-template-columns: 1fr; }
+        .story-image img { height: 360px; }
+        .story-copy { padding: 24px; }
         .admin-review-card { flex-direction: column; }
       }
     `}</style>
