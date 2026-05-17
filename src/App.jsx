@@ -1074,9 +1074,9 @@ function Style() {
         min-height: 100vh;
         overflow: hidden;
         background:
-          radial-gradient(circle at 12% 8%, rgba(70,107,53,.23), transparent 22%),
-          radial-gradient(circle at 85% 10%, rgba(184,145,86,.18), transparent 24%),
-          radial-gradient(circle at 8% 78%, rgba(70,107,53,.14), transparent 28%),
+          radial-gradient(circle at 12% 8%, rgba(70,107,53,.25), transparent 22%),
+          radial-gradient(circle at 85% 10%, rgba(184,145,86,.20), transparent 24%),
+          radial-gradient(circle at 8% 78%, rgba(70,107,53,.15), transparent 28%),
           linear-gradient(180deg, #f8f0e2 0%, #eee4d2 46%, #f9f4ea 100%);
       }
 
@@ -1111,10 +1111,40 @@ function Style() {
         filter: blur(.2px);
       }
 
+      .page-bg .site-shell::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 120px;
+        width: min(1000px, 82vw);
+        height: 1px;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, transparent, rgba(70,107,53,.26), transparent);
+        pointer-events: none;
+      }
+
+      @keyframes imageFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-7px); }
+      }
+
+      @keyframes softDrift {
+        0%, 100% { background-position: left 80px top 120px; }
+        50% { background-position: left 95px top 145px; }
+      }
+
+      .page-bg::before {
+        animation: softDrift 18s ease-in-out infinite;
+      }
+
+
       main, .topbar, .header, footer { position: relative; z-index: 1; }
 
       .topbar {
-        background: #2f5427;
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        background: linear-gradient(135deg, #24451d, #35602a);
         color: #fff;
         min-height: 42px;
         display: flex;
@@ -1125,6 +1155,7 @@ function Style() {
         font-size: 14px;
         font-weight: 800;
         flex-wrap: wrap;
+        box-shadow: 0 10px 24px rgba(31, 55, 25, .16);
       }
       .topbar span, .topbar a {
         display: inline-flex;
@@ -1137,16 +1168,17 @@ function Style() {
 
       .header {
         position: sticky;
-        top: 0;
-        z-index: 50;
+        top: 42px;
+        z-index: 79;
         height: 78px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(250, 246, 237, .88);
-        backdrop-filter: blur(18px);
+        background: rgba(250, 246, 237, .82);
+        backdrop-filter: blur(22px);
         border-bottom: 1px solid rgba(128, 111, 81, .16);
         padding: 0 34px;
+        box-shadow: 0 18px 40px rgba(43, 53, 34, .08);
       }
       .brand {
         border: 0;
@@ -1192,10 +1224,28 @@ function Style() {
         text-decoration: none;
       }
       .green-btn {
+        position: relative;
+        overflow: hidden;
         background: linear-gradient(135deg, #345a28, #5f7f38);
         color: #fff;
         padding: 14px 22px;
         box-shadow: 0 14px 28px rgba(70,107,53,.18);
+        transition: transform .22s ease, box-shadow .22s ease;
+      }
+      .green-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-120%);
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+        transition: transform .55s ease;
+      }
+      .green-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 34px rgba(70,107,53,.24);
+      }
+      .green-btn:hover::after {
+        transform: translateX(120%);
       }
       .green-btn.small { padding: 10px 14px; }
       .white-btn, .light-btn {
@@ -1318,6 +1368,7 @@ function Style() {
         border-radius: 44px 44px 120px 44px;
         box-shadow: 0 35px 90px rgba(47, 63, 38, .20);
         border: 10px solid rgba(255,255,255,.54);
+        animation: imageFloat 8s ease-in-out infinite;
       }
       .floating-card, .side-proof-card {
         position: absolute;
@@ -1412,9 +1463,12 @@ function Style() {
         height: 100%;
         object-fit: cover;
         display: block;
-        transition: .45s;
+        transition: transform .65s ease, filter .65s ease;
       }
-      .work-card:hover img { transform: scale(1.045); }
+      .work-card:hover img {
+        transform: scale(1.055);
+        filter: saturate(1.08) contrast(1.02);
+      }
       .work-card::after {
         content: "";
         position: absolute;
@@ -1593,6 +1647,11 @@ function Style() {
         padding: 28px 22px;
         box-shadow: none;
         border-right: 1px solid rgba(70,107,53,.14);
+        transition: transform .22s ease, background .22s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-4px);
+        background: rgba(255,255,255,.25);
       }
       .service-card:last-child { border-right: 0; }
       .service-card span {
@@ -1688,6 +1747,11 @@ function Style() {
         display: block;
         border-radius: 30px;
         box-shadow: 0 16px 40px rgba(58,63,47,.10);
+        transition: transform .45s ease, box-shadow .45s ease;
+      }
+      .gallery-card:hover img {
+        transform: translateY(-5px) scale(1.015);
+        box-shadow: 0 24px 54px rgba(58,63,47,.15);
       }
       .gallery-card:nth-child(1) img { border-radius: 70px 28px 28px 28px; }
       .gallery-card:nth-child(4) img { border-radius: 28px 28px 70px 28px; }
@@ -1878,7 +1942,9 @@ function Style() {
       .final-trust svg { color: #466b35; flex: 0 0 auto; }
 
       footer {
-        background: #253b20;
+        background:
+          radial-gradient(circle at 12% 0%, rgba(223,242,200,.10), transparent 30%),
+          #253b20;
         color: rgba(255,255,255,.78);
         padding: 34px 28px;
         display: flex;
@@ -2177,8 +2243,14 @@ function Style() {
         }
       }
       @media (max-width: 680px) {
-        .header { padding: 0 18px; }
-        .topbar { justify-content: flex-start; }
+        .header {
+          padding: 0 18px;
+          top: 0;
+        }
+        .topbar {
+          position: relative;
+          justify-content: flex-start;
+        }
         .hero, .featured-works, .story-section, .experience-band, .process-strip, .section, .why-panel, .contact-section, .final-trust, .admin {
           padding-left: 18px;
           padding-right: 18px;
