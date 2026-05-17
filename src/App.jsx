@@ -2411,6 +2411,515 @@ function Style() {
         }
         .admin-review-card { flex-direction: column; }
       }
+
+      /* FINAL MOBILE POLISH */
+      @media (max-width: 680px) {
+        body {
+          background: #f7f1e6;
+        }
+
+        .page-bg {
+          background:
+            radial-gradient(circle at 12% 8%, rgba(70,107,53,.14), transparent 30%),
+            linear-gradient(180deg, #fbf6ec 0%, #f1e8d8 100%);
+        }
+
+        .page-bg::before,
+        .page-bg::after {
+          opacity: .07;
+          background-size: 360px;
+        }
+
+        .topbar {
+          min-height: auto;
+          padding: 7px 12px;
+          gap: 8px 12px;
+          font-size: 11px;
+          line-height: 1.25;
+          justify-content: center;
+        }
+
+        .topbar span,
+        .topbar a {
+          gap: 4px;
+        }
+
+        .topbar svg {
+          width: 12px;
+          height: 12px;
+        }
+
+        .topbar span:nth-child(4) {
+          display: none;
+        }
+
+        .header {
+          top: 34px;
+          height: 66px;
+          padding: 0 14px;
+        }
+
+        .brand {
+          gap: 9px;
+        }
+
+        .brand > span {
+          width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+
+        .brand b {
+          font-size: 18px;
+        }
+
+        .brand small {
+          font-size: 11px;
+        }
+
+        .menu-btn {
+          display: block;
+          padding: 9px;
+          border-radius: 12px;
+        }
+
+        .mobile-menu {
+          top: 100px;
+          padding: 10px 14px;
+        }
+
+        main {
+          padding-top: 100px;
+        }
+
+        #home, #works, #story, #services, #projects, #reviews, #contact {
+          scroll-margin-top: 110px;
+        }
+
+        .hero {
+          padding: 28px 16px 34px;
+          gap: 22px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .hero-showcase {
+          order: -1;
+          width: 100%;
+        }
+
+        .main-hero-img {
+          height: 300px;
+          border-width: 6px;
+          border-radius: 26px 26px 58px 26px;
+          animation: none;
+        }
+
+        .floating-card,
+        .side-proof-card {
+          position: relative;
+          left: auto;
+          right: auto;
+          top: auto;
+          bottom: auto;
+          margin-top: 10px;
+          max-width: none;
+          border-radius: 18px;
+          padding: 13px;
+          box-shadow: 0 12px 26px rgba(58,63,47,.10);
+        }
+
+        .floating-card svg,
+        .side-proof-card svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .floating-card b,
+        .side-proof-card b {
+          font-size: 14px;
+          margin: 4px 0 2px;
+        }
+
+        .floating-card span,
+        .side-proof-card span {
+          font-size: 13px;
+        }
+
+        .eyebrow,
+        .section-heading span,
+        .why-copy span,
+        .contact-card span {
+          font-size: 10px;
+          letter-spacing: .12em;
+        }
+
+        .hero-copy h1 {
+          font-size: 34px;
+          line-height: 1.02;
+          letter-spacing: -1.5px;
+          margin: 12px 0;
+        }
+
+        .hero-copy p {
+          font-size: 15.5px;
+          line-height: 1.65;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+        }
+
+        .green-btn,
+        .white-btn,
+        .light-btn {
+          width: 100%;
+          padding: 13px 16px;
+          font-size: 14px;
+        }
+
+        .hero-trust {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+          margin-top: 18px;
+          padding-top: 14px;
+        }
+
+        .hero-trust b {
+          font-size: 20px;
+        }
+
+        .hero-trust span {
+          font-size: 11px;
+          line-height: 1.25;
+        }
+
+        .hero-service-tags {
+          gap: 6px;
+        }
+
+        .hero-service-tags span {
+          font-size: 12px;
+          padding: 7px 10px;
+        }
+
+        .featured-works,
+        .story-section,
+        .experience-band,
+        .process-strip,
+        .section,
+        .why-panel,
+        .contact-section,
+        .final-trust {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .featured-works {
+          padding-top: 28px;
+          padding-bottom: 42px;
+        }
+
+        .section-heading,
+        .section-heading.left {
+          display: block;
+          text-align: left;
+          margin-bottom: 22px;
+        }
+
+        .section-heading h2,
+        .story-copy h2,
+        .why-copy h2,
+        .cta-section h2,
+        .contact-card h2 {
+          font-size: 30px;
+          line-height: 1.08;
+          letter-spacing: -1.2px;
+        }
+
+        .section-heading p,
+        .story-copy p,
+        .contact-card p {
+          font-size: 15px;
+          line-height: 1.65;
+        }
+
+        .work-cards {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .work-card,
+        .work-card.large,
+        .work-card:not(.large):nth-child(2),
+        .work-card:not(.large):nth-child(3) {
+          height: 260px;
+          border-radius: 24px;
+          grid-row: auto;
+        }
+
+        .work-card div {
+          left: 18px;
+          right: 18px;
+          bottom: 18px;
+        }
+
+        .work-card h3 {
+          font-size: 22px;
+        }
+
+        .work-card p {
+          font-size: 14px;
+        }
+
+        .story-section {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding-top: 30px;
+          padding-bottom: 38px;
+        }
+
+        .story-image img {
+          height: 280px;
+          border-width: 6px;
+          border-radius: 58px 24px 24px 24px;
+        }
+
+        .story-copy {
+          padding-left: 0;
+          border-left: 0;
+        }
+
+        .story-points {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .story-points div {
+          padding: 11px;
+          font-size: 14px;
+        }
+
+        .experience-band {
+          grid-template-columns: 1fr 1fr;
+          padding-top: 20px;
+          padding-bottom: 28px;
+          gap: 0;
+        }
+
+        .experience-band div {
+          padding: 16px 10px;
+          border-right: 0;
+          border-bottom: 1px solid rgba(70,107,53,.14);
+        }
+
+        .experience-band b {
+          font-size: 24px;
+        }
+
+        .experience-band span {
+          font-size: 12px;
+        }
+
+        .process-strip {
+          grid-template-columns: 1fr;
+          padding-top: 22px;
+          padding-bottom: 34px;
+          gap: 12px;
+        }
+
+        .process-strip div {
+          border-left: 0;
+          padding: 0 0 13px;
+          border-bottom: 1px solid rgba(70,107,53,.16);
+        }
+
+        .process-strip b {
+          font-size: 18px;
+        }
+
+        .services-section {
+          padding-top: 38px;
+          padding-bottom: 38px;
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .services-intro {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .service-photo-strip {
+          min-height: 210px;
+          border-radius: 24px 24px 52px 24px;
+        }
+
+        .service-photo-strip img {
+          min-height: 210px;
+        }
+
+        .service-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          border-top: 0;
+          padding-top: 12px;
+        }
+
+        .service-card {
+          padding: 18px;
+          border-radius: 20px;
+        }
+
+        .service-card svg {
+          margin: 12px 0;
+        }
+
+        .service-card h3 {
+          font-size: 20px;
+        }
+
+        .service-card p {
+          font-size: 14.5px;
+        }
+
+        .service-bottom-note {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+
+        .why-panel {
+          grid-template-columns: 1fr;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          gap: 18px;
+        }
+
+        .why-copy {
+          border-radius: 26px;
+          padding: 24px;
+        }
+
+        .why-list div {
+          padding: 18px 0;
+        }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .gallery-card img,
+        .gallery-card:nth-child(1) img,
+        .gallery-card:nth-child(4) img {
+          height: 230px;
+          border-radius: 24px;
+        }
+
+        .cta-section {
+          margin-left: 16px;
+          margin-right: 16px;
+          padding: 28px 20px;
+          border-radius: 26px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .reviews-layout {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .review-list {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .review-card:nth-child(even) {
+          transform: none;
+        }
+
+        .review-card,
+        .review-form {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .contact-section {
+          grid-template-columns: 1fr;
+          padding-top: 40px;
+          padding-bottom: 42px;
+          gap: 16px;
+        }
+
+        .contact-card {
+          border-radius: 26px;
+          padding: 22px;
+        }
+
+        .quote-form {
+          padding: 20px;
+          border-radius: 24px;
+        }
+
+        .two {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        input,
+        textarea,
+        select {
+          font-size: 14px;
+          padding: 13px;
+          border-radius: 13px;
+        }
+
+        .final-trust {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding-bottom: 24px;
+        }
+
+        .final-trust div {
+          font-size: 14px;
+        }
+
+        footer {
+          padding: 28px 18px;
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 390px) {
+        .hero-copy h1 {
+          font-size: 30px;
+        }
+
+        .section-heading h2,
+        .story-copy h2,
+        .why-copy h2,
+        .cta-section h2,
+        .contact-card h2 {
+          font-size: 27px;
+        }
+
+        .hero-trust {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          font-size: 10.5px;
+        }
+      }
+
     `}</style>
   );
 }
