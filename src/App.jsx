@@ -311,7 +311,7 @@ function Header({ view, setView, currentUser, setCurrentUser, openAuth }) {
         </motion.span>
         <span>
           <b>GardenNoir</b>
-          <small>κηπουρικές εργασίες</small>
+          <small>κηπουρικές υπηρεσίες</small>
         </span>
       </button>
 
@@ -664,10 +664,10 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
               <Sparkles size={16} /> Κηπουρικές εργασίες με συνέπεια
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.7 }}>
-              Φροντίζουμε την αυλή και τον κήπο σας, απλά και σωστά.
+              Οικογενειακή κηπουρική επιχείρηση με 25+ χρόνια εμπειρίας.
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.7 }}>
-              Αναλαμβάνουμε καθαρισμούς, κλαδέματα, φυτεύσεις και συντήρηση κήπων με συνέπεια, καθαρή δουλειά και άμεση επικοινωνία.
+              Αναλαμβάνουμε κλαδέματα, καθαρισμούς, φυτεύσεις, αυτόματο πότισμα και συντήρηση κήπων σε όλη την Αττική, με ταχύτητα, συνέπεια και επαγγελματικό αποτέλεσμα.
             </motion.p>
 
             <motion.div className="hero-actions" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
@@ -681,9 +681,9 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
 
             <motion.div className="stats" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}>
               {[
-                ["12+", "χρόνια εμπειρίας"],
-                ["480+", "κήποι"],
-                [average, "μέση αξιολόγηση"],
+                ["25+", "χρόνια εμπειρίας"],
+                ["Αττική", "περιοχές εξυπηρέτησης"],
+                [average, "οικογενειακή εμπειρία"],
               ].map(([n, t]) => (
                 <motion.div key={t} whileHover={{ y: -6, scale: 1.03, rotate: -0.5 }}>
                   <b>{n}</b><span>{t}</span>
@@ -705,18 +705,35 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div className="image-caption" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }}>
-              <b>Πρώτη επικοινωνία</b>
-              <span>Συζητάμε τι χρειάζεται ο χώρος σας και προτείνουμε την κατάλληλη λύση.</span>
+              <b>Άμεση επικοινωνία</b>
+              <span>Ερχόμαστε στον χώρο σας, βλέπουμε την εργασία και προτείνουμε καθαρή λύση χωρίς υπερβολές.</span>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="section business-proof">
+        <div className="proof-main">
+          <span className="eyebrow">Εμπειρία & εμπιστοσύνη</span>
+          <h2>25+ χρόνια επαγγελματικής εμπειρίας στην κηπουρική.</h2>
+          <p>
+            Η GardenNoir είναι οικογενειακή επιχείρηση που αναλαμβάνει κηπουρικές εργασίες
+            σε όλη την Αττική. Δίνουμε έμφαση στη συνέπεια, στην καθαρή παράδοση του χώρου
+            και στην άμεση επικοινωνία με τον πελάτη.
+          </p>
+        </div>
+        <div className="proof-points">
+          <div><CheckCircle2 /><b>Άμεση εξυπηρέτηση</b><span>Γρήγορη επικοινωνία και καθαρή συνεννόηση.</span></div>
+          <div><CheckCircle2 /><b>Επαγγελματικό αποτέλεσμα</b><span>Περιποιημένη εικόνα και καθαρός χώρος μετά την εργασία.</span></div>
+          <div><CheckCircle2 /><b>Εντός Αττικής</b><span>Εξυπηρέτηση σε κατοικίες και επαγγελματικούς χώρους.</span></div>
         </div>
       </section>
 
       <section id="services" className="section">
         <div className="section-head">
           <span>Υπηρεσίες</span>
-          <h2>Οι βασικές εργασίες που αναλαμβάνουμε.</h2>
-          <p>Απλές υπηρεσίες, καθαρή δουλειά και σωστή επικοινωνία.</p>
+          <h2>Οργανωμένες κηπουρικές υπηρεσίες για σπίτια και επαγγελματικούς χώρους.</h2>
+          <p>Από μικρές αυλές μέχρι μεγάλους εξωτερικούς χώρους, η δουλειά γίνεται με συνέπεια και σωστή οργάνωση.</p>
         </div>
 
         <div className="cards">
@@ -755,7 +772,7 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
       <section className="section why">
         <div>
           <span>Γιατί βοηθάει</span>
-          <h2>Ένας περιποιημένος κήπος κάνει το σπίτι πιο όμορφο και πιο άνετο.</h2>
+          <h2>Με εμπειρία 25+ ετών, προσφέρουμε καθαρή εικόνα, σωστή συντήρηση και άμεση εξυπηρέτηση εντός Αττικής.</h2>
         </div>
         <div className="why-grid">
           {[
@@ -777,8 +794,8 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
       <section id="projects" className="section">
         <div className="section-head center">
           <span>Έργα</span>
-          <h2>Εικόνες από κήπους και εξωτερικούς χώρους</h2>
-          <p>Παραδείγματα χώρων που δείχνουν το είδος της δουλειάς που μπορούμε να αναλάβουμε.</p>
+          <h2>Ενδεικτικές εργασίες κήπου</h2>
+          <p>Ενδεικτικές εικόνες που δείχνουν το ύφος των υπηρεσιών μας: καθαριότητα, τάξη και περιποιημένο αποτέλεσμα.</p>
         </div>
 
         <div className="gallery">
@@ -858,12 +875,12 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
       <section id="contact" className="section contact-section">
         <motion.div className="contact-info" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <span>Επικοινωνία</span>
-          <h2>Πείτε μας τι χρειάζεται ο κήπος σας.</h2>
-          <p>Συμπληρώστε τη φόρμα ή καλέστε μας. Θα επικοινωνήσουμε μαζί σας για λεπτομέρειες και διαθεσιμότητα.</p>
+          <h2>Ζητήστε προσφορά για τον χώρο σας.</h2>
+          <p>Στείλτε μας τι εργασία χρειάζεστε και θα επικοινωνήσουμε μαζί σας για κόστος, διαθεσιμότητα και λεπτομέρειες.</p>
 
           <a href="tel:+302101234567"><Phone /> 210 123 4567</a>
-          <a href="mailto:hello@gardennoir.gr"><Mail /> hello@gardennoir.gr</a>
-          <div><MapPin /> Οδός Κυπαρισσιού 18, Χαλάνδρι</div>
+          <a href="mailto:alexioukipouros@gmail.com"><Mail /> alexioukipouros@gmail.com</a>
+          <div><MapPin /> Εξυπηρέτηση εντός Αττικής</div>
         </motion.div>
 
         <motion.form className="contact-form" onSubmit={submitMessage} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
@@ -889,7 +906,7 @@ function SiteView({ messages, setMessages, reviews, setReviews, currentUser, ope
       </section>
 
       <footer>
-        © 2026 GardenNoir — Κηπουρικές εργασίες και συντήρηση χώρων πρασίνου.
+        © 2026 GardenNoir — Κηπουρικές υπηρεσίες εντός Αττικής.
       </footer>
     </main>
   );
@@ -1150,7 +1167,7 @@ function AdminView({ messages, setMessages, reviews, setReviews, users, backendM
 
                 <div className="admin-actions">
                   <a href={`tel:${selected.phone}`}>Κλήση πελάτη</a>
-                  <a href="mailto:hello@gardennoir.gr?subject=Απάντηση στο αίτημά σας">Απάντηση email</a>
+                  <a href="mailto:alexioukipouros@gmail.com?subject=Απάντηση στο αίτημά σας">Απάντηση email</a>
                 </div>
               </motion.div>
             ) : (
@@ -1359,9 +1376,10 @@ function Style() {
         margin: 0;
         overflow-x: hidden;
         background:
-          radial-gradient(circle at 8% 18%, rgba(111,150,78,.16), transparent 22%),
-          radial-gradient(circle at 92% 22%, rgba(121,161,90,.14), transparent 24%),
-          linear-gradient(180deg, #f7f3ea 0%, #f4f0e6 100%);
+          radial-gradient(circle at 10% 14%, rgba(72, 112, 55, .18), transparent 25%),
+          radial-gradient(circle at 90% 18%, rgba(179, 143, 83, .13), transparent 25%),
+          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, .75), transparent 34%),
+          linear-gradient(180deg, #f8f3e8 0%, #f1eadc 58%, #f7f3ea 100%);
         color: #1d261b;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
@@ -1379,16 +1397,16 @@ function Style() {
       body::before {
         left: 0;
         background:
-          radial-gradient(circle at left 18%, rgba(73,114,45,.16), transparent 46%),
-          radial-gradient(circle at left 60%, rgba(113,157,78,.14), transparent 42%),
-          linear-gradient(180deg, rgba(70,107,53,.06) 0%, transparent 35%, rgba(70,107,53,.05) 70%, transparent 100%);
+          radial-gradient(circle at left 16%, rgba(62, 99, 45, .20), transparent 45%),
+          radial-gradient(circle at left 58%, rgba(181, 143, 82, .10), transparent 43%),
+          linear-gradient(180deg, rgba(70,107,53,.08) 0%, transparent 34%, rgba(70,107,53,.06) 72%, transparent 100%);
       }
       body::after {
         right: 0;
         background:
-          radial-gradient(circle at right 24%, rgba(73,114,45,.14), transparent 44%),
-          radial-gradient(circle at right 70%, rgba(113,157,78,.12), transparent 40%),
-          linear-gradient(180deg, rgba(70,107,53,.03) 0%, transparent 28%, rgba(70,107,53,.06) 72%, transparent 100%);
+          radial-gradient(circle at right 18%, rgba(62, 99, 45, .18), transparent 44%),
+          radial-gradient(circle at right 66%, rgba(181, 143, 82, .11), transparent 42%),
+          linear-gradient(180deg, rgba(70,107,53,.04) 0%, transparent 28%, rgba(70,107,53,.07) 74%, transparent 100%);
       }
       button, input, textarea { font-family: inherit; }
       button { cursor: pointer; }
@@ -1407,17 +1425,41 @@ function Style() {
         display: none !important;
       }
 
+      .top-contact-bar {
+        position: relative;
+        z-index: 60;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 26px;
+        background: linear-gradient(135deg, #345a28, #466b35);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 850;
+      }
+      .top-contact-bar span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+      }
+      .top-contact-bar svg {
+        color: #e6f4d8;
+      }
+
       .header {
         position: sticky;
         top: 0;
         z-index: 50;
-        height: 76px;
+        height: 78px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(247,243,234,.94);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #e2dacb;
+        background: rgba(250, 246, 237, .88);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(140, 124, 95, .18);
+        box-shadow: 0 10px 30px rgba(48, 55, 39, .05);
         padding: 0 34px;
       }
 
@@ -1433,12 +1475,12 @@ function Style() {
       .brand-icon {
         width: 48px;
         height: 48px;
-        border-radius: 16px;
-        background: #466b35;
+        border-radius: 17px;
+        background: linear-gradient(135deg, #345a28, #6f8f44);
         color: #fff;
         display: grid;
         place-items: center;
-        box-shadow: none;
+        box-shadow: 0 12px 24px rgba(70, 107, 53, .18);
       }
       .brand b { display: block; font-size: 20px; color: #1d261b; }
       .brand small { display: block; color: #6a7b55; font-weight: 800; }
@@ -1460,10 +1502,10 @@ function Style() {
         border: 0 !important;
       }
       .signup-btn, .main-btn {
-        background: #466b35 !important;
+        background: linear-gradient(135deg, #345a28, #5f7f38) !important;
         color: #fff !important;
         border: 0 !important;
-        box-shadow: 0 10px 24px rgba(70,107,53,.16);
+        box-shadow: 0 14px 28px rgba(70,107,53,.20);
       }
       .main-btn, .ghost-btn {
         border-radius: 999px;
@@ -1476,10 +1518,10 @@ function Style() {
         text-decoration: none;
       }
       .ghost-btn {
-        background: #fff;
+        background: rgba(255,255,255,.78);
         color: #273621;
-        border: 1px solid #e0d7c8;
-        box-shadow: none;
+        border: 1px solid rgba(158, 139, 103, .22);
+        box-shadow: 0 12px 26px rgba(58,63,47,.07);
       }
 
       .menu-btn {
@@ -1509,11 +1551,23 @@ function Style() {
       .hero {
         position: relative;
         min-height: auto;
-        max-width: 1180px;
+        max-width: 1220px;
         margin: 0 auto;
-        padding: 72px 28px 46px;
+        padding: 74px 28px 54px;
         display: grid;
         align-items: center;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 28px 14px 8px;
+        border-radius: 42px;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.62), rgba(255,255,255,.18)),
+          radial-gradient(circle at 22% 18%, rgba(112, 143, 77, .18), transparent 32%);
+        border: 1px solid rgba(146, 127, 91, .16);
+        box-shadow: 0 30px 90px rgba(62, 71, 51, .08);
+        z-index: -1;
       }
       .hero-grid {
         display: grid;
@@ -1532,14 +1586,15 @@ function Style() {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: #eaf2df;
-        border: 1px solid #d7e3c9;
-        color: #3c5f2f;
+        background: rgba(234, 242, 223, .82);
+        border: 1px solid rgba(114, 143, 86, .22);
+        color: #36572b;
         border-radius: 999px;
         padding: 10px 14px;
         text-transform: none;
         letter-spacing: 0;
         font-size: 14px;
+        box-shadow: 0 12px 28px rgba(70,107,53,.08);
       }
 
       h1 {
@@ -1572,10 +1627,11 @@ function Style() {
         max-width: 620px;
       }
       .stats div {
-        background: #fff;
-        border: 1px solid #e2dacb;
+        background: rgba(255,255,255,.82);
+        border: 1px solid rgba(158, 139, 103, .20);
         border-radius: 20px;
         padding: 17px;
+        box-shadow: 0 14px 34px rgba(58,63,47,.07);
       }
       .stats b {
         display: block;
@@ -1590,11 +1646,11 @@ function Style() {
 
       .hero-image-card {
         position: relative;
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 32px;
+        background: rgba(255,255,255,.82);
+        border: 1px solid rgba(158, 139, 103, .22);
+        border-radius: 34px;
         padding: 10px;
-        box-shadow: 0 22px 50px rgba(58,63,47,.12);
+        box-shadow: 0 28px 70px rgba(58,63,47,.16);
         overflow: hidden;
       }
       .hero-image-card::before { display: none; }
@@ -1624,6 +1680,62 @@ function Style() {
         font-size: 17px;
       }
 
+      .business-proof {
+        max-width: 1180px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: .9fr 1.1fr;
+        gap: 22px;
+        align-items: stretch;
+      }
+      .proof-main,
+      .proof-points {
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(158, 139, 103, .20);
+        border-radius: 30px;
+        box-shadow: 0 18px 45px rgba(58,63,47,.09);
+        padding: 32px;
+      }
+      .proof-main h2 {
+        color: #172214;
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1.08;
+        letter-spacing: -1.6px;
+        margin: 12px 0;
+      }
+      .proof-main p {
+        color: #65705c;
+        line-height: 1.75;
+        font-size: 17px;
+      }
+      .proof-points {
+        display: grid;
+        gap: 12px;
+      }
+      .proof-points div {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 12px;
+        row-gap: 4px;
+        background: #f7f3ea;
+        border: 1px solid #eee4d5;
+        border-radius: 18px;
+        padding: 16px;
+      }
+      .proof-points svg {
+        grid-row: span 2;
+        color: #466b35;
+        margin-top: 2px;
+      }
+      .proof-points b {
+        color: #1b2817;
+      }
+      .proof-points span {
+        color: #65705c;
+        font-weight: 760;
+        line-height: 1.5;
+      }
+
       .section {
         max-width: 1180px;
         margin: 0 auto;
@@ -1649,11 +1761,11 @@ function Style() {
         gap: 16px;
       }
       .service-card, .review-card, .review-form, .contact-form, .contact-info, .admin-list, .admin-detail, .admin-stats div, .auth-box, .admin-login form, .admin-access-card, .review-moderation {
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 24px;
-        backdrop-filter: none;
-        box-shadow: 0 14px 34px rgba(58,63,47,.08);
+        background: rgba(255,255,255,.86);
+        border: 1px solid rgba(158, 139, 103, .20);
+        border-radius: 26px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 18px 45px rgba(58,63,47,.09);
       }
 
       .service-card {
@@ -1701,10 +1813,11 @@ function Style() {
         display: grid;
         grid-template-columns: .85fr 1.15fr;
         gap: 28px;
-        background: #fff;
-        border: 1px solid #e2dacb;
-        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(255,255,255,.88), rgba(246,241,230,.78));
+        border: 1px solid rgba(158, 139, 103, .20);
+        border-radius: 32px;
         padding: 42px;
+        box-shadow: 0 22px 54px rgba(58,63,47,.08);
       }
       .why-grid {
         display: grid;
@@ -1730,9 +1843,10 @@ function Style() {
         position: relative;
         overflow: hidden;
         height: auto;
-        border-radius: 24px;
-        border: 1px solid #e2dacb;
-        background: #fff;
+        border-radius: 26px;
+        border: 1px solid rgba(158, 139, 103, .20);
+        background: rgba(255,255,255,.86);
+        box-shadow: 0 18px 45px rgba(58,63,47,.09);
       }
       .project-card img {
         width: 100%;
@@ -2262,6 +2376,15 @@ function Style() {
         }
       }
       @media (max-width: 980px) {
+        .top-contact-bar {
+          height: auto;
+          padding: 9px 12px;
+          flex-wrap: wrap;
+          gap: 10px 16px;
+          font-size: 13px;
+        }
+        .business-proof { grid-template-columns: 1fr; }
+
         .desktop { display: none; }
         .menu-btn { display: block; }
         .hero-grid, .why, .reviews-grid, .contact-section, .admin-grid, .admin-login { grid-template-columns: 1fr; }
