@@ -3120,6 +3120,320 @@ function Style() {
         }
       }
 
+
+      /* PROFESSIONAL READABILITY POLISH FOR OLDER AUDIENCE */
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+      body {
+        font-family: "Inter", Arial, Helvetica, sans-serif;
+        color: #172114;
+        font-size: 16px;
+        letter-spacing: -0.01em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      p,
+      .hero-copy p,
+      .section-heading p,
+      .story-copy p,
+      .contact-card p,
+      .service-card p,
+      .why-list p,
+      .process-strip p,
+      .work-card p,
+      .review-card p,
+      .review-form p {
+        font-size: 17px;
+        line-height: 1.75;
+        font-weight: 500;
+        color: #4f5b49;
+      }
+
+      .hero-copy h1,
+      .section-heading h2,
+      .story-copy h2,
+      .why-copy h2,
+      .cta-section h2,
+      .contact-card h2,
+      .admin h1 {
+        font-family: "Inter", Arial, Helvetica, sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        color: #142010;
+        text-wrap: balance;
+      }
+
+      .hero-copy h1 {
+        line-height: 1.03;
+        text-shadow: 0 2px 0 rgba(255,255,255,.35);
+      }
+
+      .section-heading h2,
+      .story-copy h2,
+      .why-copy h2,
+      .cta-section h2,
+      .contact-card h2 {
+        line-height: 1.12;
+      }
+
+      .eyebrow,
+      .section-heading span,
+      .why-copy span,
+      .contact-card span,
+      .admin-head span,
+      .service-card span,
+      .work-card span {
+        font-size: 13px;
+        letter-spacing: .08em;
+        font-weight: 800;
+      }
+
+      .brand b {
+        font-weight: 800;
+        letter-spacing: -0.025em;
+      }
+
+      .brand small {
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .nav button {
+        font-size: 15px;
+        font-weight: 700;
+        color: #24321f;
+      }
+
+      .topbar {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .green-btn,
+      .white-btn,
+      .light-btn,
+      .danger-btn,
+      .link-btn {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .service-card h3,
+      .work-card h3,
+      .gallery-card h3,
+      .review-top h3,
+      .review-form h3,
+      .why-list b,
+      .process-strip b,
+      .story-note b,
+      .service-bottom-note b {
+        font-family: "Inter", Arial, Helvetica, sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: #172114;
+      }
+
+      .service-card h3 {
+        font-size: 23px;
+        line-height: 1.18;
+      }
+
+      .work-card h3 {
+        text-shadow: 0 2px 12px rgba(0,0,0,.22);
+      }
+
+      .work-card p {
+        color: rgba(255,255,255,.90);
+        text-shadow: 0 1px 8px rgba(0,0,0,.24);
+      }
+
+      .hero-trust b,
+      .experience-band b {
+        font-weight: 800;
+        letter-spacing: -0.035em;
+      }
+
+      .hero-trust span,
+      .experience-band span,
+      .final-trust div,
+      .story-points div,
+      .contact-card a,
+      .contact-card div {
+        font-weight: 700;
+      }
+
+      .main-hero-img,
+      .work-card,
+      .story-image img,
+      .gallery-card img,
+      .service-photo-strip,
+      .contact-card,
+      .quote-form,
+      .review-card,
+      .review-form {
+        box-shadow: 0 18px 45px rgba(35, 45, 29, .13);
+      }
+
+      .header {
+        box-shadow: 0 12px 30px rgba(35, 45, 29, .10);
+      }
+
+      input,
+      textarea,
+      select {
+        font-size: 16px;
+        font-weight: 500;
+        color: #172114;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #6f7669;
+        opacity: 1;
+      }
+
+      .contact-card {
+        text-shadow: none;
+      }
+
+      .contact-card h2 {
+        color: #fff;
+        text-shadow: 0 2px 18px rgba(0,0,0,.12);
+      }
+
+      .contact-card p {
+        color: rgba(255,255,255,.86);
+      }
+
+      .contact-card a,
+      .contact-card div {
+        font-size: 16px;
+      }
+
+      .success,
+      .error {
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      @media (min-width: 681px) {
+        .hero-copy h1 {
+          font-size: clamp(46px, 4.5vw, 68px);
+        }
+
+        .section-heading h2,
+        .story-copy h2,
+        .why-copy h2,
+        .cta-section h2,
+        .contact-card h2 {
+          font-size: clamp(34px, 3.5vw, 50px);
+        }
+
+        .hero-copy p {
+          font-size: 18px;
+          max-width: 660px;
+        }
+
+        .section-heading {
+          max-width: 880px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .section-heading.left {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 680px) {
+        body {
+          font-size: 16px;
+        }
+
+        .hero-copy h1 {
+          font-size: 32px;
+          line-height: 1.12;
+          letter-spacing: -0.035em;
+        }
+
+        .section-heading h2,
+        .story-copy h2,
+        .why-copy h2,
+        .cta-section h2,
+        .contact-card h2 {
+          font-size: 27px;
+          line-height: 1.18;
+          letter-spacing: -0.03em;
+        }
+
+        p,
+        .hero-copy p,
+        .section-heading p,
+        .story-copy p,
+        .contact-card p,
+        .service-card p,
+        .why-list p,
+        .process-strip p,
+        .work-card p,
+        .review-card p,
+        .review-form p {
+          font-size: 15.5px;
+          line-height: 1.7;
+        }
+
+        .nav button,
+        .green-btn,
+        .white-btn,
+        .light-btn,
+        .danger-btn,
+        .link-btn {
+          font-size: 15px;
+        }
+
+        .service-card h3,
+        .work-card h3,
+        .gallery-card h3 {
+          font-size: 20px;
+          line-height: 1.22;
+        }
+
+        .topbar {
+          font-size: 11px;
+          font-weight: 700;
+        }
+
+        .brand b {
+          font-size: 18px;
+        }
+
+        .brand small {
+          font-size: 11px;
+        }
+
+        input,
+        textarea,
+        select {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 390px) {
+        .hero-copy h1 {
+          font-size: 29px;
+        }
+
+        .section-heading h2,
+        .story-copy h2,
+        .why-copy h2,
+        .cta-section h2,
+        .contact-card h2 {
+          font-size: 25px;
+        }
+      }
+
     `}</style>
   );
 }
