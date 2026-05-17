@@ -161,7 +161,13 @@ function Header({ currentUser, setCurrentUser, openAuth }) {
   const go = (id) => {
     setOpen(false);
     window.location.hash = "";
-    setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 40);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const headerOffset = window.innerWidth <= 680 ? 132 : 132;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }, 40);
   };
 
   const logout = async () => {
@@ -335,6 +341,14 @@ function AuthModal({ type, setType, onClose, setCurrentUser }) {
 }
 
 function PublicSite({ reviews, currentUser, openAuth }) {
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const headerOffset = window.innerWidth <= 680 ? 132 : 132;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
   const [form, setForm] = useState({ name: "", surname: "", phone: "", subject: "", service: "Συντήρηση κήπου" });
   const [reviewForm, setReviewForm] = useState({ name: "", text: "" });
   const [rating, setRating] = useState(5);
@@ -430,7 +444,7 @@ function PublicSite({ reviews, currentUser, openAuth }) {
           </p>
 
           <div className="hero-actions">
-            <button className="green-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
+            <button className="green-btn" onClick={() => scrollToSection("contact")}>
               Ζητήστε προσφορά <ArrowRight size={18} />
             </button>
             <a className="white-btn" href={`tel:${contact.phone.replaceAll(" ", "")}`}>
@@ -567,10 +581,20 @@ function PublicSite({ reviews, currentUser, openAuth }) {
       </section>
 
       <section id="services" className="section services-section">
-        <div className="section-heading">
-          <span>Υπηρεσίες</span>
-          <h2>Οργανωμένες εργασίες για κάθε εξωτερικό χώρο.</h2>
-          <p>Από καθαρισμούς και κλαδέματα μέχρι τακτική συντήρηση και αυτόματο πότισμα.</p>
+        <div className="services-intro">
+          <div className="section-heading">
+            <span>Υπηρεσίες</span>
+            <h2>Οργανωμένες εργασίες για κάθε εξωτερικό χώρο.</h2>
+            <p>Από καθαρισμούς και κλαδέματα μέχρι τακτική συντήρηση, φυτεύσεις και αυτόματο πότισμα. Η εργασία γίνεται με σειρά, καθαρή συνεννόηση και αποτέλεσμα που φαίνεται.</p>
+          </div>
+
+          <div className="service-photo-strip">
+            <img src="https://images.unsplash.com/photo-1599685315640-1b57fe70f3e2?auto=format&fit=crop&w=900&q=85" alt="Κλάδεμα και συντήρηση κήπου" />
+            <div>
+              <b>Εκτίμηση χώρου</b>
+              <span>Βλέπουμε την εργασία και προτείνουμε πρακτική λύση.</span>
+            </div>
+          </div>
         </div>
 
         <div className="service-grid">
@@ -592,6 +616,14 @@ function PublicSite({ reviews, currentUser, openAuth }) {
               </motion.article>
             );
           })}
+        </div>
+
+        <div className="service-bottom-note">
+          <div>
+            <b>Δεν ξέρετε ποια υπηρεσία χρειάζεται ο χώρος σας;</b>
+            <span>Στείλτε μας φωτογραφίες ή περιγραφή και θα σας καθοδηγήσουμε.</span>
+          </div>
+          <button className="green-btn" onClick={() => scrollToSection("contact")}>Ζητήστε εκτίμηση</button>
         </div>
       </section>
 
@@ -629,7 +661,7 @@ function PublicSite({ reviews, currentUser, openAuth }) {
           <span>Ζητήστε προσφορά</span>
           <h2>Θέλετε να καθαρίσετε, να συντηρήσετε ή να ανανεώσετε τον κήπο σας;</h2>
         </div>
-        <button className="white-btn" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
+        <button className="white-btn" onClick={() => scrollToSection("contact")}>
           Επικοινωνήστε μαζί μας
         </button>
       </section>
@@ -1068,6 +1100,9 @@ function Style() {
       }
       button, input, textarea, select { font-family: inherit; }
       button { cursor: pointer; }
+      #home, #works, #story, #services, #projects, #reviews, #contact {
+        scroll-margin-top: 145px;
+      }
 
       .page-bg {
         position: relative;
@@ -1633,32 +1668,100 @@ function Style() {
         max-width: none;
         padding-left: max(28px, calc((100vw - 1180px) / 2 + 28px));
         padding-right: max(28px, calc((100vw - 1180px) / 2 + 28px));
-        background: linear-gradient(135deg, rgba(47,84,39,.08), rgba(255,255,255,.18));
+        background:
+          radial-gradient(circle at 16% 18%, rgba(70,107,53,.14), transparent 28%),
+          radial-gradient(circle at 86% 70%, rgba(184,145,86,.13), transparent 30%),
+          linear-gradient(135deg, rgba(47,84,39,.10), rgba(255,255,255,.22));
         border-radius: 0;
         border-top: 1px solid rgba(70,107,53,.13);
         border-bottom: 1px solid rgba(70,107,53,.13);
         box-shadow: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .services-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: .12;
+        background-image: url("data:image/svg+xml,%3Csvg width='420' height='420' viewBox='0 0 420 420' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23345a28' stroke-width='1' stroke-opacity='.48'%3E%3Cpath d='M62 354 C110 280 98 190 166 112 C210 62 278 44 356 58'/%3E%3Cpath d='M164 112 C158 154 184 176 220 194'/%3E%3Cpath d='M230 78 C230 118 256 144 298 160'/%3E%3Cpath d='M62 360 C132 314 212 300 328 318'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 520px;
+        background-position: right -70px top 40px;
+        background-repeat: no-repeat;
+      }
+      .services-intro {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: .95fr 1.05fr;
+        gap: 26px;
+        align-items: end;
+        margin-bottom: 28px;
+      }
+      .services-intro .section-heading {
+        text-align: left;
+        margin-bottom: 0;
+      }
+      .service-photo-strip {
+        min-height: 250px;
+        position: relative;
+        border-radius: 44px 44px 90px 44px;
+        overflow: hidden;
+        box-shadow: 0 22px 54px rgba(58,63,47,.14);
+      }
+      .service-photo-strip img {
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+        object-fit: cover;
+        display: block;
+      }
+      .service-photo-strip::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(22,35,17,.74), transparent 58%);
+      }
+      .service-photo-strip div {
+        position: absolute;
+        z-index: 2;
+        left: 22px;
+        right: 22px;
+        bottom: 20px;
+        color: #fff;
+      }
+      .service-photo-strip b {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 5px;
+      }
+      .service-photo-strip span {
+        color: rgba(255,255,255,.82);
+        line-height: 1.5;
       }
       .service-grid {
+        position: relative;
+        z-index: 1;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 0;
+        gap: 14px;
         border-top: 1px solid rgba(70,107,53,.16);
+        padding-top: 22px;
       }
       .service-card {
-        background: transparent;
-        border: 0;
-        border-radius: 0;
-        padding: 28px 22px;
-        box-shadow: none;
-        border-right: 1px solid rgba(70,107,53,.14);
-        transition: transform .22s ease, background .22s ease;
+        background: rgba(255,255,255,.48);
+        border: 1px solid rgba(70,107,53,.12);
+        border-radius: 26px;
+        padding: 26px 22px;
+        box-shadow: 0 14px 34px rgba(58,63,47,.06);
+        transition: transform .22s ease, background .22s ease, box-shadow .22s ease;
       }
       .service-card:hover {
         transform: translateY(-4px);
-        background: rgba(255,255,255,.25);
+        background: rgba(255,255,255,.68);
+        box-shadow: 0 20px 42px rgba(58,63,47,.10);
       }
-      .service-card:last-child { border-right: 0; }
       .service-card span {
         color: #466b35;
         font-weight: 900;
@@ -1681,6 +1784,28 @@ function Style() {
         color: #65705c;
         line-height: 1.68;
         font-weight: 520;
+      }
+
+      .service-bottom-note {
+        position: relative;
+        z-index: 1;
+        margin-top: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 22px 0 0;
+        border-top: 1px solid rgba(70,107,53,.16);
+      }
+      .service-bottom-note b {
+        display: block;
+        color: #172214;
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+      .service-bottom-note span {
+        color: #65705c;
+        font-weight: 600;
       }
 
       .why-panel {
@@ -2224,6 +2349,7 @@ function Style() {
         .hero, .story-section, .why-panel, .reviews-layout, .contact-section, .admin-grid { grid-template-columns: 1fr; }
         .hero-showcase { order: -1; }
         .service-grid { grid-template-columns: repeat(2, 1fr); }
+        .services-intro { grid-template-columns: 1fr; }
         .gallery-grid, .experience-band, .process-strip { grid-template-columns: repeat(2, 1fr); }
         .section-heading.left {
           grid-template-columns: 1fr;
@@ -2269,7 +2395,8 @@ function Style() {
           border-radius: 34px 34px 80px 34px;
         }
         .floating-card, .side-proof-card { position: static; margin-top: 14px; max-width: none; }
-        .hero-trust, .service-grid, .gallery-grid, .experience-band, .process-strip, .two, .story-points { grid-template-columns: 1fr; }
+        .hero-trust, .service-grid, .gallery-grid, .experience-band, .process-strip, .two, .story-points, .services-intro { grid-template-columns: 1fr; }
+        .service-bottom-note { flex-direction: column; align-items: flex-start; }
         .gallery-grid { display: grid; }
         .story-image img {
           height: 360px;
